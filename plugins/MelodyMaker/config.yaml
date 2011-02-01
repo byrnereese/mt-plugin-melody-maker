@@ -1,0 +1,43 @@
+id: MelodyMaker
+name: Melody Maker
+description: This plugin provides a new customizable look and feel for the Melody publishing platform. 
+static_version: 1
+version: 0.1
+
+callbacks:
+  init_request: $MelodyMaker::MelodyMaker::Plugin::init_request
+
+options:
+  fieldsets:
+    customization:
+      label: Customizations
+  logo:
+    label: 'Application Logo'
+    type: file
+    scope: system
+    fieldset: customization
+    destination: melodymaker
+    tag: MelodyMakerLogo
+    order: 1
+  background_color:
+    label: 'Background Color'
+    type: colorpicker
+    default: '#000'
+    scope: system
+    fieldset: customization
+    tag: MelodyMakerBackgroundColor
+    order: 20
+  custom_styles:
+    label: 'Custom CSS'
+    type: textarea
+    rows: 14
+    fieldset: customization
+    scope: system
+    tag: 'MelodyMakerCustomCSS'
+    order: 30
+
+app_themes:
+  melody_purple:
+    label: Melody Purple
+  melody_green:
+    label: Melody Green
