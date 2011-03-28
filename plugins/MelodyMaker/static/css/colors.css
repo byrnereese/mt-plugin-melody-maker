@@ -1,0 +1,27 @@
+body.blue #admin-header{
+	background-color: #075999;
+}
+
+body.orange #admin-header{
+	background-color: #d74f0b;
+}
+
+body.green #admin-header{
+	background-color: #6ca817;
+}
+
+body.turquoise #admin-header{
+	background-color: #067081;
+}
+
+body.purple #admin-header{
+	background-color: #512c6b;
+}
+
+body.red #admin-header{
+	background-color: #cd0425;
+}
+
+body.yellow #admin-header{
+	background-color: #efb605;
+}
