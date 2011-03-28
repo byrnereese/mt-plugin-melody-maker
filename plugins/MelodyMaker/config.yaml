@@ -24,7 +24,7 @@ options:
     scope: system
     fieldset: customization
     tag: MelodyMakerBackgroundColor
-    options: blue,orange,green,turquoise,purple,red,yellow,black
+    values: blue,orange,green,turquoise,purple,red,yellow,black
   custom_styles:
     label: 'Custom CSS'
     type: textarea
