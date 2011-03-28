@@ -8,6 +8,7 @@ sub init_request {
     my ($app)  = @_;
     return if $app->id ne 'cms';
     return unless $app->isa('MT::App::CMS');
+    return if $app->query->param('noui');
     $app->config('AltTemplatePath', $plugin->path . '/tmpl');
     return 1;
 }
