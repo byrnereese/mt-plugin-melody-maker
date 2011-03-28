@@ -1,12 +1,12 @@
 use ExtUtils::MakeMaker;
 
 use YAML::Any qw(LoadFile);
-my $file = "plugins/LexBlogSkin/config.yaml";
+my $file = "plugins/MelodyMaker/config.yaml";
 my $version = LoadFile($file)->{version} ||
     die "No version found in $file";
 
 WriteMakefile(
-    NAME            => 'LexBlog Skin',
+    NAME            => 'Melody Maker',
     VERSION         => $version,
-    DISTNAME        => 'LexBlogSkin',
+    DISTNAME        => 'MelodyMaker',
 );
