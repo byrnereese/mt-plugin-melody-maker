@@ -132,14 +132,22 @@
 </mt:if>
 			</nav> 
 			
-			<form id="header-search" name="header-search"> 
+			<form id="header-search" name="header-search" method="get" action="<$mt:var name="mt_url"$>"> 
+                <input type="hidden" name="__mode" value="search_replace" />
+                <input type="hidden" name="_type" value="<mt:if name="search_type"><mt:var name="search_type"><mt:else><mt:if name="object_type"><$mt:var name="object_type"$><mt:else>entry</mt:if></mt:if>" />
+<mt:if name="blog_id">
+                <input type="hidden" name="blog_id" value="<$mt:var name="blog_id"$>" />
+</mt:if>
+                <input type="hidden" name="do_search" value="1" />
+                <input type="hidden" name="quicksearch" value="1" />
+                <input type="hidden" name="magic_token" value="<$mt:var name="magic_token"$>" />
 				<fieldset> 
-					<label id="header-search-label" for="header-search-key">Search Everything</label> 
-					<input type="text" name="s" id="header-search-key"> 
+					<label id="header-search-label" for="header-search-key"><__trans phrase="Search"><mt:if name="search_label"> <$mt:var name="search_label"$><mt:else> <__trans phrase="Entries"></mt:if></label> 
+					<input accesskey="q" type="text" name="search" id="header-search-key" title="<__trans phrase="Search (q)">">
 					<input type="submit" name="submit" id="header-search-submit" value="Submit"> 
 				</fieldset> 
 			</form> 
- 
+
 			<nav id="admin-top-menu"> 
 				<ul> 
 					<li><a href="<$mt:var name="mt_url"$>?__mode=view&amp;_type=author&amp;id=<$mt:var name="author_id" escape="html" escape="html"$>"><__trans phrase="<em>Hello</em> [_1]" params="<$mt:var name="author_name" escape="html" escape="html"$>"></a></li> 
