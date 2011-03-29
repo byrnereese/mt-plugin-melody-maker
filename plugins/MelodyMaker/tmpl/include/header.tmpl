@@ -241,7 +241,7 @@
 						</div> 
 						
 <mt:if name="can_create_blog">
-						<a id="create_site" href="#"><span>Create Site</span></a> 
+						<a id="create_site" href="<$mt:var name="mt_url"$>?__mode=view&amp;_type=blog<mt:if name="single_blog_mode">&amp;blog_id=<$mt:var name="blog_id"$></mt:if>"><span><__trans phrase="Create Site"></span></a> 
 </mt:if>
 						
 					</div><!-- /#site --> 
