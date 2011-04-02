@@ -10,6 +10,15 @@
     <link type="application/atom+xml" rel="alternate" <mt:if name="feed_name">title="<mt:var name="feed_name" escape="html">" </mt:if>href="<mt:var name="feed_url" escape="html">" />
 </mt:if>
 
+    <!-- Added by Byrne -->
+    <link href="<$mt:var name="static_uri"$>melody/mt.dialog.css" rel="stylesheet" type="text/css"/>
+    <link href="<$mt:PluginStaticWebPath component="MelodyMaker"$>css/asset-dialog.css" rel="stylesheet" type="text/css"/>
+    <link href="<$mt:PluginStaticWebPath component="MelodyMaker"$>jquery-file-upload/jquery.fileupload-ui.css" rel="stylesheet" type="text/css"/>
+
+<mt:ignore>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+</mt:ignore>
+
     <!-- Admin CSS --> 
     <link rel="stylesheet" href="<$mt:PluginStaticWebPath component="MelodyMaker"$>css/default.css" type="text/css" media="screen, projection"> 
     <link rel="stylesheet" href="<$mt:PluginStaticWebPath component="MelodyMaker"$>css/menu.css" type="text/css" media="screen, projection"> 
