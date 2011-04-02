@@ -137,6 +137,7 @@ a.icon-left:active{
 	position: relative;
 	border-bottom: 1px solid #aaa;
 	min-width: 940px;
+	z-index: 999;
 }
 
 	#admin-header ul,
@@ -709,6 +710,8 @@ a.icon-left:active{
 	width: 100%;
 	display: table;
 	min-width: 700px;
+	position: relative;
+	z-index: 0;
 }
 
 #admin-content-wrapper{
