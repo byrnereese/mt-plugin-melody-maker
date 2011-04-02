@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=<$mt:var name="language_encoding"$>" />
@@ -6,6 +6,8 @@
 <mt:setvarblock name="html_head" prepend="1">
     <mt:unless name="cfg_exists">
     <link rel="icon" href="<$mt:var name="static_uri"$>images/favicon.ico" type="image/ico" />
+
+    <mt:ignore>
         <mt:if name="mt_debug">
     <link rel="stylesheet" href="<$mt:var name="static_uri"$>css/reset.css?v=<mt:var name="mt_version_id" escape="url">" type="text/css" />
     <link rel="stylesheet" href="<$mt:var name="static_uri"$>css/utilities.css?v=<mt:var name="mt_version_id" escape="url">" type="text/css" />
@@ -14,7 +16,9 @@
         <mt:else>
     <link rel="stylesheet" href="<$mt:var name="static_uri"$>css/simple.css?v=<mt:var name="mt_version_id" escape="url">" type="text/css" />
         </mt:if>
-    <link rel="stylesheet" href="<$mt:PluginStaticWebPath component="MelodyMaker"$>css/lexblog-chromeless.css" type="text/css" />
+    </mt:ignore>
+
+    <link rel="stylesheet" href="<$mt:PluginStaticWebPath component="MelodyMaker"$>css/melody-maker-chromeless.css" type="text/css" />
     <!--[if IE]>
     <link rel="stylesheet" href="<$mt:var name="static_uri"$>css/hacks/ie.css?v=<mt:var name="mt_version_id" escape="url">" type="text/css" />
     <![endif]-->
