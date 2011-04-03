@@ -1,14 +1,16 @@
+                    </div>
+
 					<div id="related-content">
 						<div id="related-content-inner">
 			            <$mt:var name="related_content"$>
 		        		</div>
 		        	</div> <!-- /#related-content -->		
 	
-				</div> 
+				</div> <!-- /#admin-content-inner -->
 				
-			</div> 
+			</div> <!-- /#admin-content -->
 			
-		</div> 
+		</div> <!-- /#admin-content-wrapper -->
  
 	</section> 
  
@@ -22,6 +24,27 @@
 		</span> 
 	
 	</footer> 
+
+<$mt:var name="html_body_footer"$>
+<div id="dialog-container" class="autolayout-height-parent">
+    <div class="modal-mask opaque-mask"></div>
+    <div id="dialog"><iframe frameborder="0" scrolling="auto" src="<$mt:var name="static_uri">html/blank.html" id="dialog-iframe" name="dialog_iframe"></iframe></div>
+</div>
+<mt:if name=open_dialog> 
+<script type="text/javascript"> 
+/* <![CDATA[ */
+openDialog(false, '<mt:var name="dialog_mode">', '<mt:var name="dialog_params">'); 
+/* ]]> */
+</script> 
+</mt:if> 
+<div id="bootstrapper" class="hidden"></div>
+<mt:unless name="delayed_bootstrap">
+<script type="text/javascript">
+    /* <![CDATA[ */
+        App.bootstrapInline( false );
+    /* ]]> */
+</script>
+</mt:unless>
  
 </body> 
 </html>

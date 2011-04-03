@@ -44,10 +44,12 @@ applications:
   cms:
     methods:
       save_ui_prefs: $MelodyMaker::MelodyMaker::CMS::save_ui_prefs
+      ajax_file_upload: $MelodyMaker::MelodyMaker::CMS::ajax_upload
 
 callbacks:
   init_request: $MelodyMaker::MelodyMaker::Plugin::init_request
   template_param.header: $MelodyMaker::MelodyMaker::Callbacks::header_param
+  template_param.general: $MelodyMaker::MelodyMaker::Callbacks::blog_settings_param
 
 object_types:
   permission:

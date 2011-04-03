@@ -16,6 +16,62 @@ sub header_param {
     }
 } ## end header_param 
 
+sub blog_settings_param {
+    my ($cb, $app, $param, $tmpl) = @_;
+    print STDERR "Modding blog settings...\n";
+
+    my $where  = 'insertAfter';
+    my $marker = 'has-license';
+    # Marker can contain either a node or an ID of a node
+    unless(ref $marker eq 'MT::Template::Node') {
+        $marker = $tmpl->getElementById($marker);
+    }
+
+    my $setting = $tmpl->createElement('app:setting');
+    $setting->setAttribute('label','Site Logo');
+    $setting->setAttribute('id','site-logo');
+    $setting->setAttribute('hint','Upload an image to be associated with this site.');
+    $setting->innerHTML( _get_html($app, 'cfg_blog_logo.tmpl') );
+    $tmpl->$where($setting, $marker);
+} ## end blog_settings_param
+
+sub _get_html {
+    my ($app, $tmpl_name, $tmpl_param) = @_;
+
+    my $plugin = MT->component("MelodyMaker");
+    my $snip_tmpl = $plugin->load_tmpl($tmpl_name) or die $plugin->errstr;
+    return q() unless $snip_tmpl;
+
+    require MT::Template;
+    my $tmpl;
+    if ( ref $snip_tmpl ne 'MT::Template' ) {
+        $tmpl = MT::Template->new(
+            type   => 'scalarref',
+            source => ref $snip_tmpl ? $snip_tmpl : \$snip_tmpl
+            );
+    }
+    else {
+        $tmpl = $snip_tmpl;
+    }
+
+#    if ( my $p = $type_obj->{field_html_params} ) {
+#        $p = MT->handler_to_coderef($p) unless ref $p;
+#        $p->(@_);
+#    }
+
+    $tmpl->param($tmpl_param);
+    my $ctx = $tmpl->context;
+    $ctx->stash('blog', $app->blog);
+    $ctx->var('magic_token',  MT->app->current_magic);
+    $ctx->var('mt_url',  $app->base . $app->mt_uri);
+ 
+    my $html = $tmpl->output()
+        or die $tmpl->errstr;
+    $html =~ s/<\/?form[^>]*?>//gis;  # strip any enclosure form blocks
+    $html = $plugin->translate_templatized($html);
+    $html;
+}
+
 1;
 __END__
 

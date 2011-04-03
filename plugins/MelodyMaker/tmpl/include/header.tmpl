@@ -90,30 +90,13 @@
 
 </mt:setvarblock>
 <$mt:var name="html_head"$>
-<mt:ignore>
 <script type="text/javascript" src="<$mt:var name="static_uri"$>mt.js?v=<mt:var name="mt_version_id" escape="url">"></script>
+<script type="text/javascript" src="<$mt:var name="static_uri"$>jquery.mt.js?v=<mt:var name="mt_version_id" escape="url">"></script>
 <mt:if name="local_lang_id" ne="en-us">
 <script type="text/javascript" src="<$mt:var name="static_uri"$>mt_<$mt:var name="local_lang_id"$>.js?v=<mt:var name="mt_version_id" escape="URL">" charset="utf-8"></script>
 </mt:if>
-</mt:ignore>
 <$mt:var name="js_include"$>
 <mt:setvarblock name="customcss"><mt:section trim="1">
-<mt:ignore>
-<mt:ifnonempty tag="MelodyMakerLogo">
-<mt:MelodyMakerLogoAsset>
-.system #brand a,
-#brand a {
-       background-image: url(<mt:AssetURL>);
-       width: <mt:AssetProperty property="image_width">px;
-       height: <mt:AssetProperty property="image_height">px;
-}
-.main-screen #brand{
-	width: <mt:AssetProperty property="image_width">px;
-	height: <mt:AssetProperty property="image_height">px;
-}
-</mt:MelodyMakerLogoAsset>
-</mt:ifnonempty>
-</mt:ignore>
 <$mt:MelodyMakerCustomCSS$>
 </mt:section></mt:setvarblock>
 <mt:ifnonempty name="customcss">
@@ -294,8 +277,29 @@
 </mt:if>
 
 			<div id="admin-content"> 
- 
 				<div id="admin-content-inner"> 
+
+<mt:if name="system_msg">
+    <$mt:var name="system_msg"$>
+</mt:if>
+<mt:if name="show_display_options_link">
+    <a href="javascript:void(0)" class="display-options-link" mt:command="open-flyout" mt:flyout="display-options-widget"><__trans phrase="Display Options"></a>
+</mt:if>
+<mt:if name="object_nav"><$mt:var name="object_nav"$></mt:if>
+
+                    <h1 class="page-title"><$mt:var name="page_title"$><mt:if name="loaded_revision">: <em><__trans phrase="from Revision History"></em></mt:if></h1>
+
+<mt:if name="content_header">
+<$mt:var name="content_header"$>
+</mt:if>
+
+<mt:if name="content_nav">
+                   <div id="content-nav">
+<$mt:var name="content_nav"$>
+                   </div>
+</mt:if>
+<$mt:var name="form_header"$>
+                    <div class="box"> 
 
 <mt:ignore>
 <!------ MARKER -------->

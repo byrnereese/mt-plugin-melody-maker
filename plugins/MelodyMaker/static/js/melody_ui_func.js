@@ -70,7 +70,7 @@
 		
 		/*$('#edit-entry #admin-content-inner').wrapInner('<div id="edit-entry-box" class="widget"/>');
 		$('#edit-entry #admin-content-inner').append($('#edit-entry #related-content'));*/
-				
+			
 	});
 
 })(jQuery);
