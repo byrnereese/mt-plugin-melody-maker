@@ -1,0 +1,135 @@
+<mt:ignore>
+    Common CSS and Javascript header elements
+    
+    This template is used by dialog/head.tmpl, include/header.tmpl,
+    preview_strip.tmpl and preview_template_strip.tmpl.  It is not
+    currently used by include/chromeless_header.tmpl or header_popup.tmpl
+    since both are different enough to be annoying...
+</mt:ignore>
+<mt:setvartemplate name="linked_stylesheet"><mt:section trim="1">
+    <mt:if name="relpath">
+      <mt:if name="component">
+        <mt:PluginStaticWebPath component="$component" cat="$relpath" setvar="href">
+      <mt:else>
+        <mt:var name="static_uri" cat="$relpath" setvar="href">
+      </mt:if>
+      <mt:var name="relpath" value=""><mt:var name="component" value="">
+    </mt:if>
+    <mt:if name="href"><link rel="stylesheet" href="<$mt:var name="href"$>?v=<mt:version escape="url">" type="text/css" <mt:if name="media"> media="<mt:var name="media">"<mt:var name="media" value=""></mt:if>/></mt:if>
+</mt:section></mt:setvartemplate>
+
+<mt:setvartemplate name="linked_script"><mt:section trim="1">
+    <mt:if name="relpath">
+      <mt:if name="component">
+        <mt:PluginStaticWebPath component="$component" cat="$relpath" setvar="href">
+      <mt:else>
+        <mt:var name="static_uri" cat="$relpath" setvar="href">
+      </mt:if>
+      <mt:var name="relpath" value=""><mt:var name="component" value="">
+    </mt:if>
+    <mt:if name="href"><script type="text/javascript" src="<$mt:var name="href"$>?v=<mt:version escape="url">"></script></mt:if>
+</mt:section></mt:setvartemplate>
+
+    
+<mt:setvarblock name="html_head" prepend="1">
+      <mt:var name="linked_stylesheet" relpath="css/jquery/jquery.ui.all.css">
+      <!-- Admin CSS --> 
+      <mt:var name="linked_stylesheet" component="MelodyMaker" relpath="css/default.css" media="screen, projection">
+      <mt:var name="linked_stylesheet" component="MelodyMaker" relpath="css/menu.css" media="screen, projection">
+      <mt:var name="linked_stylesheet" component="MelodyMaker" relpath="css/screen.css" media="screen, projection">
+      <mt:var name="linked_stylesheet" component="MelodyMaker" relpath="css/colors.css" media="screen, projection">
+      <mt:var name="linked_stylesheet" component="MelodyMaker" relpath="css/print.css" media="print">
+      <!--[if lt IE 8]><mt:var name="linked_stylesheet" component="MelodyMaker" relpath="css/ie.css" media="screen, projection"><![endif]--> 
+
+      <!-- Added by Byrne -->
+      <mt:var name="linked_stylesheet" relpath="melody/mt.dialog.css">
+      <mt:var name="linked_stylesheet" component="MelodyMaker" relpath="css/asset-dialog.css">
+      <mt:var name="linked_stylesheet" component="MelodyMaker" relpath="jquery-file-upload/jquery.fileupload-ui.css">
+
+  <mt:unless name="optimize_ui">
+  <mt:else>
+  </mt:unless>
+
+    <mt:if name="local_lang_id" ne="en-us">
+      <mt:setvarblock name="relpath">styles_<mt:var name="local_lang_id">.css</mt:setvarblock>
+      <mt:var name="linked_stylesheet" relpath="$relpath">
+    </mt:if>
+
+    <mt:ignore>
+        Although the following would be more appropriately prepended to
+        the js_include block below, we are forced to put them here because
+        there is no js_include in Movable Type and hence many plugins add
+        dependent JS libraries to the end of html_head. :-/
+    </mt:ignore>
+    <mt:jqueryurl setvar="jqueryurl">
+    <mt:unless name="optimize_ui">
+      <mt:var name="linked_script" href="$jqueryurl">
+      <script type="text/javascript" charset="utf-8">
+      /* <![CDATA[ */
+         $.noConflict();
+      /* ]]> */
+      </script>
+      <mt:var name="linked_script" relpath="js/common/Core.js">
+      <mt:var name="linked_script" relpath="js/common/JSON.js">
+      <mt:var name="linked_script" relpath="js/common/Timer.js">
+      <mt:var name="linked_script" relpath="js/common/Cookie.js">
+      <mt:var name="linked_script" relpath="js/common/DOM.js">
+      <mt:var name="linked_script" relpath="js/common/Devel.js">
+      <mt:var name="linked_script" relpath="js/common/Observable.js">
+      <mt:var name="linked_script" relpath="js/common/Autolayout.js">
+      <mt:var name="linked_script" relpath="js/common/Component.js">
+      <mt:var name="linked_script" relpath="js/common/List.js">
+      <mt:var name="linked_script" relpath="js/common/App.js">
+      <mt:var name="linked_script" relpath="js/common/Cache.js">
+      <mt:var name="linked_script" relpath="js/common/Client.js">
+      <mt:var name="linked_script" relpath="js/common/Template.js">
+      <mt:var name="linked_script" relpath="js/tc.js">
+      <mt:var name="linked_script" relpath="js/tc/tableselect.js">
+      <mt:var name="linked_script" relpath="jquery/ui/jquery.ui.all.js">
+
+      <!-- Admin JS --> 
+      <mt:var name="linked_script" component="MelodyMaker" relpath="js/modernizr-1.7.min.js">
+      <mt:var name="linked_script" component="MelodyMaker" relpath="js/jquery.ba-resize.min.js">
+      <mt:var name="linked_script" component="MelodyMaker" relpath="js/jquery.infieldlabels.js">
+      <mt:var name="linked_script" component="MelodyMaker" relpath="js/melody_ui_func.js">
+
+      <!-- For Dialogs -->
+      <mt:var name="linked_script" relpath="jquery/jquery.form.js">
+
+    <mt:else>
+      <mt:if name="jqueryurl" like="/mt-static\/jquery\/jquery.js">
+          <mt:var name="jqueryurl" replace="jquery.js","jquery.min.js" setvar="jqueryurl">
+      </mt:if>
+      <mt:var name="linked_script" href="$jqueryurl">
+      <script type="text/javascript" charset="utf-8">
+      /* <![CDATA[ */
+         $.noConflict();
+      /* ]]> */
+      </script>
+      <mt:var name="linked_script" relpath="js/mt_core_compact.js">
+      <mt:var name="linked_script" relpath="jquery/ui/minified/jquery.ui.all.min.js">
+    </mt:unless>
+</mt:setvarblock> <mt:ignore> End of mt:setvarblock name="html_head" prepend="1" </mt:ignore>
+
+<mt:setvarblock name="js_include" prepend="1">
+    <mt:var name="linked_script" relpath="mt.js">
+    <mt:var name="linked_script" relpath="jquery.mt.js">
+    <mt:if name="local_lang_id" ne="en-us">
+        <mt:setvarblock name="relpath">mt_<mt:var name="local_lang_id">.js</mt:setvarblock>
+        <mt:var name="linked_script" relpath="$relpath">
+    </mt:if>
+
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        __blankURI__      = '<$mt:var name="static_uri">html/blank.html';
+        CMSScriptURI      = '<$mt:var name="mt_url"$>';
+        ScriptURI         = '<mt:var name="script_url">';
+        ScriptBaseURI     = '<mt:var name="script_base_url">';
+        StaticURI         = '<mt:var name="static_uri">';
+        HelpBaseURI       = '<mt:var name="help_url">';
+        BlogID            = <mt:var name="blog_id" default="0">;
+        MagicToken        = '<$mt:var name="magic_token"$>';
+        window.onkeypress = dialogKeyPress;
+    /* ]]> */
+    </script>
+</mt:setvarblock>
