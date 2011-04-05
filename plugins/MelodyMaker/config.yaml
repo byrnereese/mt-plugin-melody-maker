@@ -9,14 +9,6 @@ options:
   fieldsets:
     customization:
       label: Customizations
-#  logo:
-#    label: 'Application Logo'
-#    type: file
-#    scope: system
-#    fieldset: customization
-#    destination: melodymaker
-#    tag: MelodyMakerLogo
-#    order: 1
   background_color:
     label: 'Background Color'
     type: select
@@ -40,6 +32,20 @@ options:
 #  melody_green:
 #    label: Melody Green
 
+status_widgets:
+  comments:
+    label: Comments
+    count_handler: $MelodyMaker::MelodyMaker::Plugin::status_comments
+    mode: list_comments
+    args:
+      filter_key: 'unpublished'
+    condition: >>
+       sub { return MT->instance->blog; }
+
+tags:
+  block:
+    App:StatusWidgets: $MelodyMaker::MelodyMaker::Tags::status_widgets
+
 applications:
   cms:
     methods:
@@ -49,6 +55,7 @@ applications:
 callbacks:
   init_request: $MelodyMaker::MelodyMaker::Plugin::init_request
   template_param.header: $MelodyMaker::MelodyMaker::Callbacks::header_param
+#  template_param.footer: $MelodyMaker::MelodyMaker::Callbacks::footer_param
   template_param.general: $MelodyMaker::MelodyMaker::Callbacks::blog_settings_param
 
 object_types:
