@@ -13,4 +13,16 @@ sub init_request {
     return 1;
 }
 
+sub status_comments {
+    my ($ctx) = @_;
+    my $app = MT->instance;
+    my $blog = $app->can('blog') ? $app->blog : $ctx->stash('blog');
+    my $count = MT->model('comment')->count({
+        ($blog ? (blog_id => $blog->id) : ()),
+        visible => 0,
+        junk_status => MT->model('comment')->NOT_JUNK(),
+    });
+    return $count;
+}
+
 1;
