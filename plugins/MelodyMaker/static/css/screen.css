@@ -1611,7 +1611,7 @@ ul.object-nav li#next-link a:active{
 /* @group Dialog */
 
 #dialog-container{
-	/*display: none;*/
+	display: none;
 	position: fixed;
 	left: 0;
 	top: 0;
