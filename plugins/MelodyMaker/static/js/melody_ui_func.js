@@ -70,7 +70,16 @@
 		
 		/*$('#edit-entry #admin-content-inner').wrapInner('<div id="edit-entry-box" class="widget"/>');
 		$('#edit-entry #admin-content-inner').append($('#edit-entry #related-content'));*/
-			
+
+        $('.open-dialog').fancybox({
+            'width'         : 660,
+            'height'        : 498,
+            'autoScale'     : false,
+            'transitionIn'  : 'none',
+            'transitionOut' : 'none',
+            'type'          : 'iframe'
+        });
+
 	});
 
 })(jQuery);
