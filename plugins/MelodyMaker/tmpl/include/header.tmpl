@@ -186,7 +186,7 @@
 <mt:if name="sub_nav_loop">
                             <ul<mt:if name="collapsed"> style="display:none"</mt:if>>
 <mt:loop name="sub_nav_loop">
-                                <li><mt:if name="allowed"><a<mt:if name="dialog"> href="javascript:void(0)" onclick="return openDialog(false, '<mt:var name="dialog">', 'blog_id=<$mt:var name="blog_id"$>&amp;return_args=<mt:var name="return_args" escape="url">')"<mt:else> href="<$mt:var name="link" escape="html"$>"</mt:if>><$mt:var name="label"$></a><mt:else><span><$mt:var name="label"$></span></mt:if></li>
+                                <li><mt:if name="allowed"><a <mt:if name="dialog">class="open-dialog" </mt:if>href="<mt:if name="dialog"><$mt:var name="mt_url"$>?__mode=<mt:var name="dialog">&amp;blog_id=<$mt:var name="blog_id"$>&amp;return_args=<mt:var name="return_args" escape="url"><mt:else><$mt:var name="link" escape="html"$></mt:if>"><$mt:var name="label"$></a><mt:else><span><$mt:var name="label"$></span></mt:if></li>
 </mt:loop>
                             </ul>
 </mt:if>
