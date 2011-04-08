@@ -85,11 +85,16 @@
 						<div class="search split"> 
 							<div class="inner"> 
 							
-								<form id="search-sites" action=""> 
+								<form id="search-sites" method="post" action="<$mt:var name="mt_url"$>"> 
+                                    <input type="hidden" name="__mode" value="search_replace" />
+                                    <input type="hidden" name="_type" value="blog" />
+                                    <input type="hidden" name="do_search" value="1" />
+                                    <input type="hidden" name="quicksearch" value="0" />
+                                    <input type="hidden" name="json" value="1" />
+                                    <input type="hidden" name="magic_token" value="<$mt:var name="magic_token"$>" />
 									<label for="s">search by site name or web address</label> 
-									<input type="text" name="s" id="s"> 
+									<input type="text" name="search" id="s"> 
 								</form> 
-								
 
 <mt:if name="top_blog_loop">
   <mt:setvarblock name="blog_selector_dropdown">
