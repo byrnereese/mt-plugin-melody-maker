@@ -609,7 +609,12 @@ button[name="preview_entry"]:active,
 			#find-site-search li.result .pinned{
 				background-position: 0 0;
 			}
-	
+
+/* Added by Byrne */
+.blog-highlight { height: 0px; background-color: #444; }
+.full #drop-indicator { position: absolute; top: 0; left: 0; opacity: .8; width: 343px; height: 303px; text-align: center; font-size: 2em; font-weight: bold; padding: 145px 0 0 0; }
+#pinned_sites_list { position: relative; }
+.site a.site_preview { overflow: hidden; text-overflow: ellipsis; width: 251px; display: block; }
 /* @end */
 
 /* @group Blog Menu */

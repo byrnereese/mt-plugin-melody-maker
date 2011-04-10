@@ -28,10 +28,12 @@
 	</footer> 
 
 <$mt:var name="html_body_footer"$>
+<mt:ignore>
 <div id="dialog-container" class="autolayout-height-parent">
     <div class="modal-mask opaque-mask"></div>
     <div id="dialog"><iframe frameborder="0" scrolling="auto" src="<$mt:var name="static_uri">html/blank.html" id="dialog-iframe" name="dialog_iframe"></iframe></div>
 </div>
+</mt:ignore>
 <mt:if name=open_dialog> 
 <script type="text/javascript"> 
 /* <![CDATA[ */

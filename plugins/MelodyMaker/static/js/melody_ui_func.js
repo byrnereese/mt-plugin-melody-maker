@@ -103,6 +103,50 @@
             }
         });
 
+        /* Drag and Dropable Blog Favorites */
+        var size_limit = 5;
+        $( '#pinned_sites_list' ).sortable({
+            update: function(event, ui) {
+                alert("A new favorite was added, or the order was changed! Make an ajax call now to save state.");
+            },
+            over: function(event, ui) {
+                if ( $(this).hasClass('full') ) {
+                    $(this).find('.blog-highlight').height(0);
+                } else {
+                    $(this).find('.blog-highlight').height(67);
+                }
+            },
+            create: function(event, ui) {
+                if ( $('#pinned_sites_list li').size() > (size_limit) ) {
+                    $('#pinned_sites_list').addClass('full');
+                }               
+            },
+            receive: function(event, ui) {
+                if ( $('#pinned_sites_list li').size() > size_limit + 1 ) {
+                    $(ui.sender).sortable('cancel');
+                    $('#pinned_sites_list #drop-indicator').fadeOut('slow', function() { $(this).remove(); });
+                }
+            }
+        });
+        $( '#site_search_results' ).sortable({
+            placeholder: "blog-highlight",
+            connectWith: "#pinned_sites_list",
+            start: function( event, ui ) {
+                $(this).addClass('sorting');
+                if ( $('#pinned_sites_list li').size() > (size_limit - 1) ) {
+                    $('#pinned_sites_list').addClass('full');
+                    $('<li id="drop-indicator" class="site result">No room at the Inn</li>').hide().appendTo('#pinned_sites_list').height( 302 ).fadeIn();
+                }
+            },
+            deactivate: function( event, ui ) {
+                $(this).removeClass('sorting');
+                if ( $('#pinned_sites_list').hasClass('full') ) {
+                } else {
+                    $('#pinned_sites_list #drop-indicator').remove();
+                }
+                $('#pinned_sites_list').sortable('enable');
+            }
+        }).disableSelection();
 	});
 
 })(jQuery);
