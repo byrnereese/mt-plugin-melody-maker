@@ -70,6 +70,31 @@ div.filter{
 	color: white;
 }
 
+.field-inner{
+	margin-bottom: 12px;
+	border-bottom: 1px solid #eee;
+	padding-bottom: 12px;
+}
+
+:last-child > .field-inner,
+#allow_commenter_regist-field .field-inner,
+#allow_commenter_regist-field .field-inner p{
+	margin-bottom: 0;
+	border-bottom: none;
+	padding-bottom: 0;
+}
+
+.field-content label{
+	font-weight: normal;
+}
+
+.hint{
+	margin-top: 5px;
+	font-style: italic;
+	font-family: Georgia, "Times New Roman", serif;
+	color: #999;
+}
+
 /* @end */
 
 /* @group Global Button Styles */
@@ -79,7 +104,7 @@ input[type="submit"],
 button,
 .view-all a,
 .buttons a,
-.listing .actions a{
+.listing .actions-bar-inner .button-actions a{
 	display: inline-block;
 	font-family: "lucida grande", sans-serif;
 	font-size: 11px;
@@ -113,7 +138,7 @@ input[type="submit"]:hover,
 button:hover,
 .view-all a:hover,
 .buttons a:hover,
-.listing .actions a:hover{
+.listing .actions-bar-inner .button-actions a:hover{
 	background: #2a81d7;
 	background: -moz-linear-gradient(0% 100% 90deg, #206bcb, #3e9ee5);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, 
@@ -134,7 +159,7 @@ input[type="submit"]:active,
 button:active,
 .view-all a:active,
 .buttons a:active,
-.listing .actions a:active{
+.listing .actions-bar-inner .button-actions a:active{
 	background: #206bcb;
 	box-shadow: none;
 	-moz-box-shadow: none;
@@ -202,6 +227,25 @@ button[name="preview_entry"]:active,
 	-webkit-box-shadow: none;
 	cursor: pointer;
 	text-shadow: none;
+}
+
+.help-link{
+	position: relative;
+	text-decoration: none;
+	background: #f2f2f2;
+	color: #aaa;
+	padding: 0 5px;
+	border-radius: 20px;
+
+}
+
+.help-link:hover{
+	background: #fff;
+	text-decoration: none;
+}
+
+.help-link:active{
+	margin-top: 1px;
 }
 
 /* @end */
@@ -851,8 +895,24 @@ button[name="preview_entry"]:active,
 
 #dashboard .widget,
 #related-content .widget,
-#admin-content-primary,
+#edit-entry #admin-content-primary,
+#edit-page #admin-content-primary,
+#ca_prefs_chooser_form,
+#general > *,
+#publishing > *,
+#comments > *,
+#trackbacks > *,
+#registration > *,
+#spam fieldset,
+#web-services > *,
+#entry > fieldset > *,
+#edit-blog .settings-actions-bar,
+.fieldset-options,
 .welcome-widget,
+#search-replace .search-bar,
+#backup-panel,
+#export_blog_id_field-field,
+#import-panel fieldset,
 .msg{
 	background: #fff;
 	position: relative;
@@ -977,27 +1037,50 @@ button[name="preview_entry"]:active,
 /* @group Tabs */
 
 #content-nav ul,
-ul.tabs{
+.tabs{
 	overflow: auto;
 	margin-bottom: 1em;
 }
 
 #content-nav ul li,
-ul.tabs li{
+.tabs li{
 	float:  left;
 	margin-right: 5px;
 }
 
 #content-nav ul li a,
-ul.tabs li a{
+.tabs li a{
 	float: left;
 	display: block;
 	padding: 2px 8px;
 	font-size: 12px;
 }
 
+.tabs li a:hover{
+	background: #aaa;
+	background: rgba(0,0,0,0.04);
+	text-decoration: none;
+	color: #666;
+	border-radius: 20px;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+}
+
+.tabs li a:active{
+	background: #ccc;
+	text-decoration: none;
+	color: #666;
+	border-radius: 20px;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	background: #333;
+	color: #fff;
+	text-shadow:  0 1px 0 rgba(0,0,0,0.7);
+}
+
 #content-nav ul li.active a,
-ul.tabs li.selected-tab a{
+li.selected-tab a,
+li.yah a{
 	font-weight: bold;
 	border-radius: 20px;
 	-moz-border-radius: 20px;
@@ -1038,34 +1121,38 @@ ul.tabs li.selected-tab a{
 
 /* @group Table Styles */
 
-#list-entry #admin-content-primary,
-#list-comment #admin-content-primary{
-	box-shadow: none;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	background-color: transparent !important;
-	padding: 0;
+.page-desc{
+	font-style: italic;
+	font-family: Georgia, "Times New Roman", serif;
+	color: #888;
+	text-shadow: 0 1px 0 #fff;
+	-moz-text-shadow: 0 1px 0 #fff;
+	-webkit-text-shadow: 0 1px 0 #fff;
+	position: relative;
+	top: -12px;
+	margin-bottom: 0;
+}
+
+.listing{
+	margin-bottom: 25px;
 }
 
 .listing-filter .listing-filter-inner{
-	padding: 12px;
-	background: #d4d4d4 url("../images/tables/table_actions_bg.png") repeat-x top left;
+	padding: 8px 12px;
+	background: #fff;
+	font-size: 12px;
 	border: 1px solid #aaa;
-	border-bottom-width: 0;
 	line-height: 0;
-	border-left-top-radius: 4px;
-	-webkit-border-left-top-radius: 4px;
-	border-top-left-radius: 5px;
-	-webkit-border-top-left-radius: 5px;
-	-moz-border-radius-topleft: 5px;
-	border-top-right-radius: 5px;
-	-webkit-border-top-right-radius: 5px;
-	-moz-border-radius-topright: 5px;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	margin-bottom: 20px;
 }
 
 .listing-filter .listing-filter-inner .filter-title,
-.listing-filter .listing-filter-inner #filter-title{
-	font-size: 14px;
+.listing-filter .listing-filter-inner #filter-title,
+.listing-filter .listing-filter-inner #filter-select{
+	font-size: 13px;
 	color: #555;
 	text-shadow: none;
 	padding: 0;
@@ -1073,7 +1160,25 @@ ul.tabs li.selected-tab a{
 	min-height: 0;
 	line-height: 1em;
 	text-shadow: 0 1px 0 #fff;
+	font-weight: bold;
+}
+
+.listing-filter .listing-filter-inner #filter-select .buttons{
+	margin-left: 8px;
+}
+
+.listing-filter .listing-filter-inner #filter-select .buttons a{
+	position: relative;
+	top: -2px;
+}
+
+.listing-filter .listing-filter-inner #filter-title a{
 	font-weight: normal;
+	padding-left: 8px;
+}
+
+.listing-filter .filter{
+	margin-bottom: 0;
 }
 
 .listing .pagination{
@@ -1083,7 +1188,8 @@ ul.tabs li.selected-tab a{
 	position: relative;
 }
 
-.listing .pagination span{
+.listing .pagination span,
+.listing .pagination a{
 	background: url("../images/icons/ico_table_sprite.png") no-repeat 0 0;
 	line-height: 0;
 	text-indent: -9000px;
@@ -1095,14 +1201,6 @@ ul.tabs li.selected-tab a{
 	width: 0;
 	overflow: hidden;
 	text-align: left;
-}
-
-.listing .pagination span.start{
-	background-position: 40px 0;
-}
-
-.listing .pagination .to-start-disabled{
-	background-position: -25px 0;
 }
 
 .listing .pagination span.current-rows{
@@ -1118,7 +1216,35 @@ ul.tabs li.selected-tab a{
 	-webkit-box-shadow: inset 0 3px 8px #666;
 }
 
-.listing .pagination span.end-disabled{
+.listing .pagination .start{
+	background-position: 0 -32px;
+}
+
+.listing .pagination .to-start{
+	background-position: -25px -32px;
+}
+
+.listing .pagination .start:hover{
+	background-position: 0 -64px;
+}
+
+.listing .pagination .to-start:hover{
+	background-position: -25px -64px;
+}
+
+.listing .pagination .start:active{
+	background-position: 0 -96px;
+}
+
+.listing .pagination .to-start:active{
+	background-position: -25px -96px;
+}
+
+.listing .pagination .to-start-disabled{
+	background-position: -25px 0;
+}
+
+.listing .pagination .end-disabled{
 	background-position: -75px 0;
 	padding-left: 26px;
 }
@@ -1127,14 +1253,40 @@ ul.tabs li.selected-tab a{
 	background-position: -50px 0;
 }
 
-.listing th.si{
-	background: url("../images/tables/ico_");
+.listing .pagination .end{
+	background-position: -75px -32px;
+	padding-left: 26px;
+}
+
+.listing .pagination .to-end{
+	background-position: -51px -32px;
+	padding-left: 24px;
+}
+
+.listing .pagination .end:hover{
+	background-position: -75px -64px;
+	padding-left: 26px;
+}
+
+.listing .pagination .to-end:hover{
+	background-position: -51px -64px;
+	padding-left: 24px;
+}
+
+.listing .pagination .end:active{
+	background-position: -75px -96px;
+	padding-left: 26px;
+}
+
+.listing .pagination .to-end:active{
+	background-position: -51px -96px;
+	padding-left: 24px;
 }
 
 .listing .actions-bar{
 	position: relative;
 	padding: 0;
-	background: #ebebeb url("../images/tables/table_row_bg.png") repeat-x top left;
+	background: #c0c0c0 url("../images/tables/table_row_bg.png") repeat-x top left;
 	border: 1px solid #bbb;
 }
 
@@ -1144,7 +1296,13 @@ ul.tabs li.selected-tab a{
 }
 
 .listing .actions-bar-top{
-	border-bottom-width: 0;
+	border-top-left-radius: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	border-top-right-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	border-bottom: 0 !important;
 }
 
 .listing .actions-bar-bottom{
@@ -1159,8 +1317,14 @@ ul.tabs li.selected-tab a{
 
 .listing .actions{
 	background: transparent;
-	margin: 0;
+	margin: 0 0 0 4px;
 	padding: 0;
+}
+
+.listing .actions-bar .actions a,
+.listing .actions-bar .actions select{
+	position: relative;
+	top: 2px;
 }
 
 .listing .actions-bar-inner{
@@ -1171,21 +1335,77 @@ ul.tabs li.selected-tab a{
 .listing table{
 	border: 1px solid #bbb;
 	margin-bottom: 0;
-	border-collapse: collapse;
 }
 
 .listing table tr,
 .listing table tr th,
 .listing table tr td{
-	background: #f9f9f9;
-	border: 1px solid #bbb;
-	box-shadow: inset 1px 1px 0 #fff;
-	-moz-box-shadow: inset 1px 1px 0 #fff;
-	-webkit-box-shadow: inset 1px 1px 0 #fff;
+	background: #fff;
+	border-right: 0;
+	border-left: 0;
+
 }
 
+.listing table tr th,
+.listing table tr td{
+	padding: 3px 5px;
+}
+
+.listing table tbody tr td{
+	padding-top: 8px;
+}
+
+.listing table tbody tr.slave td{
+	padding-top: 0;
+}
+
+.listing table thead tr th,
+.listing table thead tr th.status{
+	text-align: left;
+	vertical-align: middle;
+	border-bottom: 1px solid #bbb;
+}
+
+.listing table thead tr th:first-child{
+	border-left: 0;
+}
+
+.listing table thead .nostyle,
+.listing table thead .cb,
+.listing table thead .si{
+	width: 10px;
+}
+
+.listing table .publish,
+.listing table th.nostyle,
+.listing table td.bl{
+	display: none !important;
+}
+
+.listing table tr td:first-child{
+	border-left: 0;	
+}
+
+.listing table thead tr th.status > *{
+	vertical-align: middle;
+}
+
+.listing table .url a{
+	color: #aaa;
+	font-style: italic;
+	font-family: Georgia, "Times New Roman", serif;
+}
+
+.listing table tr:hover .url a{
+	color: #777;
+}
 .listing table tr{
 	border: 1px solid #ccc;
+	box-shadow: inset 0 1px 0 #000;
+}
+
+.listing table tr.odd td{
+	background: #eee;
 }
 
 .listing table ul li{
@@ -1470,6 +1690,34 @@ ul.tabs li.selected-tab a{
 }
 
 /* @end */
+
+/* @end */
+
+/* @group Preferences Screen */
+
+.settings-actions-bar .actions{
+	margin: 0;
+}
+
+div#entry > fieldset{
+	border: 0;
+	padding: 0;
+}
+
+#nwc_smart_replace-field ul{
+	margin-bottom: 20px;
+}
+
+#replace-fields h4{
+	font-size: 12px;
+	font-weight: bold;
+}
+
+#allow_comments-field .field-inner{
+	margin-bottom: 0;
+	border-bottom: 0;
+	padding-bottom: 0;
+}
 
 /* @end */
 
