@@ -10,6 +10,9 @@ sub init_request {
     return unless $app->isa('MT::App::CMS');
     return if $app->query->param('noui');
     $app->config('AltTemplatePath', $plugin->path . '/tmpl');
+
+    my $selector = $app->registry('blog_selector');
+    $selector->{code} = '$MelodyMaker::MelodyMaker::CMS::build_blog_selector';
     return 1;
 }
 

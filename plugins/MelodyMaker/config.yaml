@@ -48,6 +48,8 @@ tags:
 
 applications:
   cms:
+    blog_selector:
+      handler: $MelodyMaker::MelodyMaker::CMS::build_blog_selector
     methods:
       save_ui_prefs: $MelodyMaker::MelodyMaker::CMS::save_ui_prefs
       ajax_file_upload: $MelodyMaker::MelodyMaker::CMS::ajax_upload

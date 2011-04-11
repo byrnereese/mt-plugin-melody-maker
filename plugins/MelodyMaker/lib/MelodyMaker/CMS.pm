@@ -5,6 +5,139 @@ use File::Spec::Functions;
 use Digest::SHA1 qw( sha1_base64 );
 use MT::Util qw( encode_url );
 
+sub build_blog_selector {
+    my ($ctx, $args, $cond) = @_;
+    my $app     = MT->instance;
+    my $q       = $app->query;
+
+    my $param = {};
+
+    my $blog = $app->blog;
+    my $blog_id = $blog->id if $blog;
+
+    $param->{dynamic_all} = $blog->custom_dynamic_templates eq 'all' if $blog;
+
+    my $blog_class = MT->model('blog');
+    my $auth = $app->user or return;
+
+    # Any access to a blog will put it on the top of your
+    # recently used blogs list (the blog selector)
+    $app->add_to_favorite_blogs($blog_id) if $blog_id;
+
+    my %args;
+    $args{join} =
+      MT::Permission->join_on(
+                               'blog_id',
+                               {
+                                  author_id   => $auth->id,
+                                  permissions => { not => "'comment'" }
+                               }
+      );
+    $args{limit} = 11;    # don't load more than 11
+    my @blogs = $blog_class->load( undef, \%args );
+
+    my @fav_blogs = @{ $auth->favorite_blogs || [] };
+    @fav_blogs = grep { $_ != $blog_id } @fav_blogs if $blog_id;
+
+    # Special case for when a user only has access to a single blog.
+    if (    ( !defined( $blog_id ) )
+         && ( @blogs == 1 )
+         && ( scalar @fav_blogs <= 1 ) )
+    {
+
+        # User only has visibility to a single blog. Don't
+        # bother giving them a dashboard link for 'all blogs', or
+        # to 'select a blog'.
+        $param->{single_blog_mode} = 1;
+        my $blog = $blogs[0];
+        $blog_id = $blog->id;
+        my $perms = MT::Permission->load(
+                            { blog_id => $blog_id, author_id => $auth->id } );
+        if ( !$app->blog ) {
+            if ( $app->mode eq 'dashboard' ) {
+                $q->param( 'blog_id', $blog_id );
+                $param->{blog_id}   = $blog_id;
+                $param->{blog_name} = $blog->name;
+                $app->permissions($perms);
+                $app->blog($blog);
+            }
+            else {
+                @fav_blogs = ($blog_id);
+                $blog_id   = undef;
+            }
+        }
+    } ## end if ( ( !defined( $q->param...)))
+    elsif ( @blogs && ( @blogs <= 10 ) ) {
+
+        # This user only has visibility to 10 or fewer blogs;
+        # no need to reference their 'favorite' blogs list.
+        my @ids = map { $_->id } @blogs;
+        if ($blog_id) {
+            @ids = grep { $_ != $blog_id } @ids;
+        }
+        @fav_blogs = @ids;
+        if ( $auth->is_superuser ) {
+
+            # Better check to see if there are more than
+            # 10 blogs in the system; if so, a superuser
+            # will still want the 'Select a blog...' chooser.
+            # Otherwise, hide it.
+            my $all_blog_count = $blog_class->count();
+            if ( $all_blog_count < 11 ) {
+                $param->{selector_hide_chooser} = 1;
+            }
+        }
+        else {
+
+            # This user is not a superuser and only has
+            # 10 blogs, so they don't need a 'select blog'
+            # link...
+            $param->{selector_hide_chooser} = 1;
+        }
+    } ## end elsif ( @blogs && ( @blogs...))
+    $param->{selector_hide_chooser} ||= 0;
+
+    # Logic for populating the blog selector control
+    #   * Pull list of 'favorite blogs' from user record
+    #   * Load all of those blogs so we can display them
+    #   * Exclude the current blog from the favorite list so it isn't
+    #     shown twice.
+    @blogs = $blog_class->load( { id => \@fav_blogs } ) if @fav_blogs;
+    my %blogs = map { $_->id => $_ } @blogs;
+    @blogs = ();
+    foreach my $id (@fav_blogs) {
+        push @blogs, $blogs{$id} if $blogs{$id};
+    }
+
+    my @data;
+    if (@blogs) {
+        my @perms
+          = grep { !$_->is_empty }
+          MT::Permission->load(
+                        { author_id => $auth->id, blog_id => \@fav_blogs, } );
+        my %perms = map { $_->blog_id => $_ } @perms;
+        for my $blog (@blogs) {
+            my $perm = $perms{ $blog->id };
+            next unless $auth->is_superuser || ( $perm && !$perm->is_empty );
+            push @data,
+              { top_blog_id => $blog->id, top_blog_name => $blog->name, top_blog_url => $blog->site_url };
+            $data[-1]{top_blog_selected} = 1
+              if $blog_id && ( $blog->id == $blog_id );
+        }
+    }
+    $param->{top_blog_loop} = \@data;
+    if ( !$app->user->can_create_blog
+         && ( $param->{single_blog_mode} || scalar(@data) <= 1 ) )
+    {
+        $param->{no_submenu} = 1;
+    }
+    my $plugin = MT->component('MelodyMaker');
+    my $tmpl = $plugin->load_tmpl( 'include/blog_selector.tmpl', $param );
+    $tmpl->context( $ctx );
+    $tmpl->param($param);
+    return $tmpl->output( );
+}
+
 sub ajax_upload {
     my $app   = shift;
     print STDERR "In ajax_upload\n";
