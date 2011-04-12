@@ -9,6 +9,12 @@
 		
 	}
 
+	//stick the footer at the bottom of the page if we're on an iPad/iPhone due to viewport/page bugs in mobile webkit
+	if(navigator.platform == 'iPad' || navigator.platform == 'iPhone' || navigator.platform == 'iPod')
+	{
+	     $("#footer").css("position", "static");
+	};
+
 	var setAdminHeight = function(){ // sets the height of the admin panel so it stretches to fit the window vertically
 	
 		headerHeight = $("header").height();
