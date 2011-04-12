@@ -91,10 +91,6 @@ a:hover{
 	-webkit-border-radius: 2px;
 }
 
-.inner form{
-	padding-bottom: 20px;
-}
-
 .field-content select, 
 .field-content input.ti, 
 .field-content textarea.ta, 
@@ -198,8 +194,13 @@ a.icon-left:active{
 	text-shadow: 0 -1px 1px #1d62ab;
 }
 
-.inner form p{
-	margin: 8px 0 0.25em 0;
+.inner form p,
+div.left{
+	margin: 0 0 3px 0;
+}
+
+div.left{
+	margin-bottom: 10px;
 }
 
 .msg{
@@ -217,17 +218,9 @@ a.icon-left:active{
 	background: url("images/ico_warning.png") no-repeat 13px 13px;
 }
 
-div.left{
-	float: left;
-	width: 50%;
-	margin-bottom: 0;
-}
-
 div.actions-bar-inner{
-	float: right;
-	width: 50%;
-	text-align: right;
-	margin-top: -17px;
+	width: 100%;
+	clear: both;
 }
 
 div.actions-bar-inner:after{
@@ -238,6 +231,31 @@ div.actions-bar-inner:after{
 	height: 0;
 	overflow: hidden;
 	visibility: hidden;
+}
+
+.debug .debug-panel{
+	width: 370px;
+	margin: 0 auto;
+	margin-top: 40px;
+	border: 1px solid #bbb;
+	padding: 15px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	background-color: #eee;
+}
+
+.debug-panel ul,
+.debug-panel li{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.debug-panel li{
+	padding-bottom: 0.5em;
+	border-bottom: 1px solid #bbb;
+	margin-bottom: 0.5em;
 }
 
 .chromeless-wide {
