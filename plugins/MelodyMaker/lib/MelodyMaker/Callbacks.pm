@@ -7,7 +7,7 @@ sub header_param {
     my ($cb, $app, $param, $tmpl) = @_;
     my $perms = $app->user->permissions;
     require JSON;
-    my $prefs = JSON::jsonToObj( $perms->ui_prefs );
+    my $prefs = JSON::from_json( $perms->ui_prefs );
     my @collapsed = split(',',$prefs->{'collapsed'});
     my $menus = $app->registry('menus');
     foreach my $id (@collapsed) {
@@ -18,7 +18,6 @@ sub header_param {
 
 sub blog_settings_param {
     my ($cb, $app, $param, $tmpl) = @_;
-    print STDERR "Modding blog settings...\n";
 
     my $where  = 'insertAfter';
     my $marker = 'has-license';
