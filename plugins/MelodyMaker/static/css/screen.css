@@ -2197,7 +2197,6 @@ ul.object-nav li#next-link a:active{
 /* @group Debug Toolbar */
 
 .debug-panel{
-	display: none;
 	position: fixed;
 	bottom: 36px;
 	left: 15px;
