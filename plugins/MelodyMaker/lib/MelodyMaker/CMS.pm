@@ -132,8 +132,8 @@ sub build_blog_selector {
         $param->{no_submenu} = 1;
     }
     my $plugin = MT->component('MelodyMaker');
-    my $tmpl = $plugin->load_tmpl( 'include/blog_selector.tmpl', $param );
-    $tmpl->context( $ctx );
+    my $tmpl = $plugin->load_tmpl( 'include/blog_selector.tmpl' );
+#    $tmpl->context( $ctx );
     $tmpl->param($param);
     return $tmpl->output( );
 }
