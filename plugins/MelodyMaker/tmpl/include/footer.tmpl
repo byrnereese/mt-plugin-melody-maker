@@ -20,7 +20,13 @@
  
 		<span class="container"> 
 			<div class="plugin"> 
-				<a href="#">Publish <span>4</span></a> 
+<mtapp:StatusWidgets>
+<mt:if name="widget_html">
+       <mt:var name="widget_html">
+<mt:else>
+       <a href="<mt:var name="link">"><mt:var name="label"> <span><mt:var name="count"></span></a> 
+</mt:if>
+</mtapp:StatusWidgets>
 			</div> 
 			<p id="copyright">Copyright 2011 The Open Melody Project. All Rights Reserved.</p> 
 		</span> 

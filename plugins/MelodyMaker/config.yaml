@@ -41,6 +41,10 @@ status_widgets:
       filter_key: 'unpublished'
     condition: >>
        sub { return MT->instance->blog; }
+  console:
+    template: console.tmpl
+#    condition: >>
+#       sub { return MT->config->DebugMode > 0; }
 
 tags:
   block:
