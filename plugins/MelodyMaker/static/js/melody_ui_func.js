@@ -67,11 +67,12 @@
                 'collapsed'   : collapsed_str
             }, function(data, status, xhr) {
                 if (typeof data['error'] != 'undefined') {
-                    alert("There was an error saving your UI prefs: "+data['error']);
+                    // ignore silently - error can occur if person leaves page prior to
+                    // ajax call returning. 
                 } else {
                     // do nothing
                 }
-            },'json').error(function() { alert("Error saving UI prefs."); });
+            },'json');
 		});
 		
 		/*$('#edit-entry #admin-content-inner').wrapInner('<div id="edit-entry-box" class="widget"/>');
@@ -110,10 +111,23 @@
         });
 
         /* Drag and Dropable Blog Favorites */
+        // TODO - encapsulate into a dedicated jquery plugin file
         var size_limit = 5;
         $( '#pinned_sites_list' ).sortable({
             update: function(event, ui) {
-                alert("A new favorite was added, or the order was changed! Make an ajax call now to save state.");
+                var favorites = $(this).sortable('toArray').toString().replace(/blog-/g,'');
+		        $.post( ScriptURI, {
+                    '__mode'      : 'save_ui_prefs',
+                    'magic_token' : MagicToken,
+                    'favorites'   : favorites
+                }, function(data, status, xhr) {
+                    if (typeof data['error'] != 'undefined') {
+                        // ignore silently - error can occur if person leaves page prior to
+                        // ajax call returning. 
+                    } else {
+                        // do nothing
+                    }
+                },'json');
             },
             over: function(event, ui) {
                 if ( $(this).hasClass('full') ) {

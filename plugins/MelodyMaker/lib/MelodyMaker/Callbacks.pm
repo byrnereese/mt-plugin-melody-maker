@@ -8,7 +8,8 @@ sub header_param {
     my $perms = $app->user->permissions;
     require JSON;
     my $prefs = JSON::from_json( $perms->ui_prefs );
-    my @collapsed = split(',',$prefs->{'collapsed'});
+    my $coll = $prefs->{'collapsed'} || '';
+    my @collapsed = split(',',$coll);
     my $menus = $app->registry('menus');
     foreach my $id (@collapsed) {
         $id =~ s/-menu//;

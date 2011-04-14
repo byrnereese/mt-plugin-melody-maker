@@ -16,12 +16,8 @@
 									<label for="s">search by site name or web address</label> 
 									<input type="text" name="search" id="s"> 
 								</form> 
-
-<mt:if name="top_blog_loop">
-  <mt:setvarblock name="blog_selector_dropdown">
-    <mt:loop name="top_blog_loop">
-      <mt:unless name="top_blog_selected">
-									<li class="site result favoritable"> 
+<mt:setvartemplate name="blog_list_item">
+									<li id="blog-<$mt:var name="top_blog_id"$>" class="site result"> 
 										<a href="<$mt:var name="mt_url"$>?blog_id=<$mt:var name="top_blog_id"$>&amp;<$mt:var name="return_args" escape="html"$>"><img src="<$mt:PluginStaticWebPath component="MelodyMaker"$>images/site_search/ico_default_logo.png"></a> 
 										<div class="result_data"> 
 											<a class="pin<mt:if name="top_blog_pinned"> pinned</mt:if>" href="#">Pin This Site</a> 
@@ -29,6 +25,12 @@
 											<a class="site_preview" rel="external" href="<$mt:var name="top_blog_url" escape="html"$>"><$mt:var name="top_blog_url" escape="html"$></a> 
 										</div> 
 									</li> 
+</mt:setvartemplate>
+<mt:if name="top_blog_loop">
+  <mt:setvarblock name="blog_selector_dropdown">
+    <mt:loop name="top_blog_loop">
+      <mt:unless name="top_blog_selected">
+        <mt:var name="blog_list_item">
       </mt:unless>
     </mt:loop>
   </mt:setvarblock>
@@ -51,16 +53,9 @@
 								<h3>Pinned Sites</h3> 
  
 								<ul id="pinned_sites_list" class="blog-selector-connected"> 
- 
-									<li class="site result"> 
-										<a href="#"><img src="<$mt:PluginStaticWebPath component="MelodyMaker"$>images/site_search/ico_default_logo.png"></a> 
-										<div class="result_data"> 
-											<a class="pin pinned" href="#">Pin This Site</a> 
-											<h4 class="site_title"><a href="#">Byrne's Blog</a></h4> 
-											<a class="site_preview" rel="external" href="http://byrnesblog.com">http://byrnesblog.com</a> 
-										</div> 
-									</li> 
- 
+<mt:loop name="fave_blog_loop">
+  <mt:var name="blog_list_item">
+</mt:loop> 
 								</ul> 
  
 							</div> 

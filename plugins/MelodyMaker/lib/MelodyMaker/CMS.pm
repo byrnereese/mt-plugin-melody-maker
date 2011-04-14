@@ -5,6 +5,26 @@ use File::Spec::Functions;
 use Digest::SHA1 qw( sha1_base64 );
 use MT::Util qw( encode_url );
 
+sub _build_blog_loop {
+    my ($app,$blogs) = @_;
+    my $auth = $app->user or return;
+    my @data;
+    if ($blogs) {
+#        my @perms
+#          = grep { !$_->is_empty }
+#          MT->model('permission')->load(
+#                        { author_id => $auth->id, blog_id => \@fav_blogs, } );
+#        my %perms = map { $_->blog_id => $_ } @perms;
+        for my $blog (@$blogs) {
+#            my $perm = $perms{ $blog->id };
+#            next unless $auth->is_superuser || ( $perm && !$perm->is_empty );
+            push @data,
+              { top_blog_id => $blog->id, top_blog_name => $blog->name, top_blog_url => $blog->site_url };
+        }
+    }
+    return \@data;
+}
+
 sub build_blog_selector {
     my ($ctx, $args, $cond) = @_;
     my $app     = MT->instance;
@@ -20,6 +40,19 @@ sub build_blog_selector {
     my $blog_class = MT->model('blog');
     my $auth = $app->user or return;
 
+    my $perms = $app->user->permissions;
+
+    my $fave_blog_data;
+    if ($perms) {
+        require JSON;
+        my $prefs     = JSON::from_json($perms->ui_prefs);
+        my $favorites = $prefs->{favorites};
+        my @faves     = split(',',$favorites);
+        my @blogs     = $blog_class->load( { id => \@faves } ) if @faves;
+        $fave_blog_data = _build_blog_loop($app,\@blogs);
+    }
+
+    # REMOVE FROM MELODY MAKER?
     # Any access to a blog will put it on the top of your
     # recently used blogs list (the blog selector)
     $app->add_to_favorite_blogs($blog_id) if $blog_id;
@@ -33,9 +66,14 @@ sub build_blog_selector {
                                   permissions => { not => "'comment'" }
                                }
       );
-    $args{limit} = 11;    # don't load more than 11
+    $args{limit} = 6;    # don't load more than 6
     my @blogs = $blog_class->load( undef, \%args );
 
+    # This grouping of fav_blogs is carried over from Movable Type
+    # The list is maintained based upon the most recently viewed list
+    # of blogs.
+    # Melody Maker's concept of favorite blogs is more about bookmarking
+    # them. It is maintained manually.
     my @fav_blogs = @{ $auth->favorite_blogs || [] };
     @fav_blogs = grep { $_ != $blog_id } @fav_blogs if $blog_id;
 
@@ -67,9 +105,9 @@ sub build_blog_selector {
             }
         }
     } ## end if ( ( !defined( $q->param...)))
-    elsif ( @blogs && ( @blogs <= 10 ) ) {
+    elsif ( @blogs && ( @blogs <= 5 ) ) {
 
-        # This user only has visibility to 10 or fewer blogs;
+        # This user only has visibility to 5 or fewer blogs;
         # no need to reference their 'favorite' blogs list.
         my @ids = map { $_->id } @blogs;
         if ($blog_id) {
@@ -109,31 +147,35 @@ sub build_blog_selector {
         push @blogs, $blogs{$id} if $blogs{$id};
     }
 
-    my @data;
-    if (@blogs) {
-        my @perms
-          = grep { !$_->is_empty }
-          MT::Permission->load(
-                        { author_id => $auth->id, blog_id => \@fav_blogs, } );
-        my %perms = map { $_->blog_id => $_ } @perms;
-        for my $blog (@blogs) {
-            my $perm = $perms{ $blog->id };
-            next unless $auth->is_superuser || ( $perm && !$perm->is_empty );
-            push @data,
-              { top_blog_id => $blog->id, top_blog_name => $blog->name, top_blog_url => $blog->site_url };
-            $data[-1]{top_blog_selected} = 1
-              if $blog_id && ( $blog->id == $blog_id );
-        }
-    }
-    $param->{top_blog_loop} = \@data;
+    my $all_blog_count = $blog_class->count();
+    $param->{all_blog_count} = $all_blog_count;
+
+    my @blog_data = @{ _build_blog_loop($app,\@blogs) };
+#    if (@blogs) {
+#        my @perms
+#          = grep { !$_->is_empty }
+#          MT::Permission->load(
+#                        { author_id => $auth->id, blog_id => \@fav_blogs, } );
+#        my %perms = map { $_->blog_id => $_ } @perms;
+#        for my $blog (@blogs) {
+#            my $perm = $perms{ $blog->id };
+#            next unless $auth->is_superuser || ( $perm && !$perm->is_empty );
+#            push @blog_data,
+#              { top_blog_id => $blog->id, top_blog_name => $blog->name, top_blog_url => $blog->site_url };
+#            $blog_data[-1]{top_blog_selected} = 1
+#              if $blog_id && ( $blog->id == $blog_id );
+#        }
+#    }
+    $param->{top_blog_loop} = \@blog_data;
+    $param->{fave_blog_loop} = $fave_blog_data;
+
     if ( !$app->user->can_create_blog
-         && ( $param->{single_blog_mode} || scalar(@data) <= 1 ) )
+         && ( $param->{single_blog_mode} || scalar(@blog_data) <= 1 ) )
     {
         $param->{no_submenu} = 1;
     }
     my $plugin = MT->component('MelodyMaker');
     my $tmpl = $plugin->load_tmpl( 'include/blog_selector.tmpl' );
-#    $tmpl->context( $ctx );
     $tmpl->param($param);
     return $tmpl->output( );
 }
@@ -433,16 +475,20 @@ sub _upload_file {
 sub _ui_prefs_from_params {
     my $app  = shift;
     my $q    = $app->query;
-    my $exp  = $q->param('collapsed');
     my %prefs;
-    $prefs{'collapsed'} = $exp;
-    MT::Util::to_json( \%prefs );
+    if (my $exp  = $q->param('collapsed')) {
+        $prefs{'collapsed'} = $exp;
+    }
+    if (my $fav  = $q->param('favorites')) {
+        $prefs{'favorites'} = $fav;
+    }
+    \%prefs;
 } ## end sub _ui_prefs_from_params
 
 sub _send_json_response {
     my ( $app, $result ) = @_;
     require JSON;
-    my $json = JSON::objToJson($result);
+    my $json = JSON::to_json($result);
     $app->send_http_header("");
     $app->print($json);
     return $app->{no_print_body} = 1;
@@ -455,8 +501,11 @@ sub save_ui_prefs {
         or return _send_json_response( $app, { 'error' => $app->translate("No permissions") });
     $app->validate_magic() 
         or return _send_json_response( $app, { 'error' => $app->translate("Invalid magic") });
-    my $prefs = _ui_prefs_from_params($app);
-    $perms->ui_prefs($prefs);
+    require JSON;
+    my $prefs = JSON::from_json($perms->ui_prefs);
+    my $new   = _ui_prefs_from_params($app);
+    MT::__merge_hash( $prefs, $new, 1 );
+    $perms->ui_prefs( JSON::to_json($prefs) );
     $perms->save
         or return _send_json_reponse( $app, { 'error' => $app->translate( "Saving permissions failed: [_1]", $perms->errstr ) });
     return _send_json_response( $app, { 'success' => 1 });
