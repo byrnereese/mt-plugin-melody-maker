@@ -2,6 +2,16 @@ package MelodyMaker::Plugin;
 
 use strict;
 
+sub init_app {
+    my $cb     = shift;
+    my ($app)  = @_;
+    require MelodyMaker::CMS;
+    my $r = $app->registry;
+    my $selector = $r->{'blog_selector'};
+    $selector->{code} = sub { &MelodyMaker::CMS::build_blog_selector; };
+    return 1;
+}
+
 sub init_request {
     my $cb     = shift;
     my $plugin = $cb->plugin;
@@ -10,9 +20,6 @@ sub init_request {
     return unless $app->isa('MT::App::CMS');
     return if $app->query->param('noui');
     $app->config('AltTemplatePath', $plugin->path . '/tmpl');
-
-    my $selector = $app->registry('blog_selector');
-    $selector->{code} = '$MelodyMaker::MelodyMaker::CMS::build_blog_selector';
     return 1;
 }
 
