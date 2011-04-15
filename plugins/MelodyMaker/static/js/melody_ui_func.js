@@ -111,8 +111,9 @@
         });
 
         /* Drag and Dropable Blog Favorites */
-        // TODO - encapsulate into a dedicated jquery plugin file
+        // TODO - encapsulate into a dedicated jquery plugin file to remove global variables
         var size_limit = 5;
+        var sortableIn = 0;
         $( '#pinned_sites_list' ).sortable({
             update: function(event, ui) {
                 var favorites = $(this).sortable('toArray').toString().replace(/blog-/g,'');
@@ -135,6 +136,7 @@
                 } else {
                     $(this).find('.blog-highlight').height(67);
                 }
+                sortableIn = 1;
             },
             create: function(event, ui) {
                 if ( $('#pinned_sites_list li').size() > (size_limit) ) {
@@ -145,6 +147,31 @@
                 if ( $('#pinned_sites_list li').size() > size_limit + 1 ) {
                     $(ui.sender).sortable('cancel');
                     $('#pinned_sites_list #drop-indicator').fadeOut('slow', function() { $(this).remove(); });
+                }
+                sortableIn = 1;
+            },
+            out: function(e, ui) { 
+                sortableIn = 0; 
+            },
+            beforeStop: function(e, ui) {
+                if (sortableIn == 0) { 
+                    // TODO - this flickrs a bit, item snaps back to origination
+                    ui.item.fadeOut('fast',function() { 
+                        $(this).remove(); 
+                        var favorites = $('#pinned_sites_list').sortable('toArray').toString().replace(/blog-/g,'');
+		                $.post( ScriptURI, {
+                            '__mode'      : 'save_ui_prefs',
+                            'magic_token' : MagicToken,
+                            'favorites'   : favorites
+                        }, function(data, status, xhr) {
+                            if (typeof data['error'] != 'undefined') {
+                                // ignore silently - error can occur if person leaves page prior to
+                                // ajax call returning. 
+                            } else {
+                                // do nothing
+                            }
+                        },'json');
+                    });
                 }
             }
         });
@@ -167,6 +194,7 @@
                 $('#pinned_sites_list').sortable('enable');
             }
         }).disableSelection();
+
 	});
 
 })(jQuery);
