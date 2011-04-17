@@ -42,14 +42,23 @@ sub build_blog_selector {
 
     my $perms = $app->user->permissions;
 
-    my $fave_blog_data;
+    my @faves;
+    my $fave_data;
     if ($perms) {
         require JSON;
         my $prefs     = JSON::from_json($perms->ui_prefs);
         my $favorites = $prefs->{favorites};
-        my @faves     = split(',',$favorites);
-        my @blogs     = $blog_class->load( { id => \@faves } ) if @faves;
-        $fave_blog_data = _build_blog_loop($app,\@blogs);
+        @faves        = split(',',$favorites);
+        if (@faves) {
+            my @blogs     = $blog_class->load( { id => \@faves } );
+            # Sort blogs. Since it is a small list, let's just do a brute force sort
+            my %blogs = map { $_->id => $_ } @blogs;
+            @blogs = ();
+            for (@faves) {
+                push @blogs, $blogs{ $_ };
+            }
+            $fave_data = _build_blog_loop($app,\@blogs);
+        }
     }
 
     # REMOVE FROM MELODY MAKER?
@@ -66,21 +75,21 @@ sub build_blog_selector {
                                   permissions => { not => "'comment'" }
                                }
       );
-    $args{limit} = 6;    # don't load more than 6
-    my @blogs = $blog_class->load( undef, \%args );
+    $args{limit} = $app->blog ? 6 : 5;    # don't load more than 6
+    my @blogs = $blog_class->load( { id => { not => \@faves } }, \%args );
 
     # This grouping of fav_blogs is carried over from Movable Type
     # The list is maintained based upon the most recently viewed list
     # of blogs.
     # Melody Maker's concept of favorite blogs is more about bookmarking
     # them. It is maintained manually.
-    my @fav_blogs = @{ $auth->favorite_blogs || [] };
-    @fav_blogs = grep { $_ != $blog_id } @fav_blogs if $blog_id;
+    my @accessed_blogs = @{ $auth->favorite_blogs || [] };
+    @accessed_blogs = grep { $_ != $blog_id } @accessed_blogs if $blog_id;
 
     # Special case for when a user only has access to a single blog.
     if (    ( !defined( $blog_id ) )
          && ( @blogs == 1 )
-         && ( scalar @fav_blogs <= 1 ) )
+         && ( scalar @accessed_blogs <= 1 ) )
     {
 
         # User only has visibility to a single blog. Don't
@@ -100,7 +109,7 @@ sub build_blog_selector {
                 $app->blog($blog);
             }
             else {
-                @fav_blogs = ($blog_id);
+                @accessed_blogs = ($blog_id);
                 $blog_id   = undef;
             }
         }
@@ -113,7 +122,7 @@ sub build_blog_selector {
         if ($blog_id) {
             @ids = grep { $_ != $blog_id } @ids;
         }
-        @fav_blogs = @ids;
+        @accessed_blogs = @ids;
         if ( $auth->is_superuser ) {
 
             # Better check to see if there are more than
@@ -140,10 +149,10 @@ sub build_blog_selector {
     #   * Load all of those blogs so we can display them
     #   * Exclude the current blog from the favorite list so it isn't
     #     shown twice.
-    @blogs = $blog_class->load( { id => \@fav_blogs } ) if @fav_blogs;
+    @blogs = $blog_class->load( { id => \@accessed_blogs, id => { not => \@faves } } ) if @accessed_blogs;
     my %blogs = map { $_->id => $_ } @blogs;
     @blogs = ();
-    foreach my $id (@fav_blogs) {
+    foreach my $id (@accessed_blogs) {
         push @blogs, $blogs{$id} if $blogs{$id};
     }
 
@@ -151,23 +160,9 @@ sub build_blog_selector {
     $param->{all_blog_count} = $all_blog_count;
 
     my @blog_data = @{ _build_blog_loop($app,\@blogs) };
-#    if (@blogs) {
-#        my @perms
-#          = grep { !$_->is_empty }
-#          MT::Permission->load(
-#                        { author_id => $auth->id, blog_id => \@fav_blogs, } );
-#        my %perms = map { $_->blog_id => $_ } @perms;
-#        for my $blog (@blogs) {
-#            my $perm = $perms{ $blog->id };
-#            next unless $auth->is_superuser || ( $perm && !$perm->is_empty );
-#            push @blog_data,
-#              { top_blog_id => $blog->id, top_blog_name => $blog->name, top_blog_url => $blog->site_url };
-#            $blog_data[-1]{top_blog_selected} = 1
-#              if $blog_id && ( $blog->id == $blog_id );
-#        }
-#    }
+
     $param->{top_blog_loop} = \@blog_data;
-    $param->{fave_blog_loop} = $fave_blog_data;
+    $param->{fave_blog_loop} = $fave_data;
 
     if ( !$app->user->can_create_blog
          && ( $param->{single_blog_mode} || scalar(@blog_data) <= 1 ) )

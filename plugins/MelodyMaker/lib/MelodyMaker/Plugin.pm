@@ -7,7 +7,7 @@ sub init_app {
     my ($app)  = @_;
     require MelodyMaker::CMS;
     my $r = $app->registry;
-    return if $app->query->param('noui');
+#    return if $app->query->param('noui');
     my $selector = $r->{'blog_selector'};
     $selector->{code} = sub { &MelodyMaker::CMS::build_blog_selector; };
     return 1;
