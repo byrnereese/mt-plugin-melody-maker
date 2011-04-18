@@ -104,7 +104,9 @@
                     indicator.remove();
                     var ul = $('#site_search_results').empty().show();
                     jQuery.each(blogs, function( index, blog ) { 
-                        $('<li class="site result"><a href="'+ScriptURI+'?blog_id='+blog['blog.id']+'&amp;__mode=dashboard"><img src="'+StaticURI+'support/plugins/melodymaker/images/site_search/ico_default_logo.png"></a><div class="result_data"><a class="pin" href="#">Pin This Site</a><h4 class="site_title"><a href="'+ScriptURI+'?blog_id='+blog['blog.id']+'&amp;__mode=dashboard">'+blog[ 'blog.name' ]+'</a></h4><a class="site_preview" rel="external" href="'+blog['blog.site_url']+'">'+blog['blog.site_url']+'</a></div></li>').hide().appendTo( ul ).fadeIn();
+                        var logo = StaticURI+'support/plugins/melodymaker/images/site_search/ico_default_logo.png';
+                        if ( blog['blog.logo_url'] != '' ) logo = blog['blog.logo_url'];
+                        $('<li id="blog-'+blog['blog.id']+'" class="site result"><a href="'+ScriptURI+'?blog_id='+blog['blog.id']+'&amp;__mode=dashboard"><img src="'+logo+'" width="38" height="38" /></a><div class="result_data"><a class="pin" href="#">Pin This Site</a><h4 class="site_title"><a href="'+ScriptURI+'?blog_id='+blog['blog.id']+'&amp;__mode=dashboard">'+blog[ 'blog.name' ]+'</a></h4><a class="site_preview" rel="external" href="'+blog['blog.site_url']+'">'+blog['blog.site_url']+'</a></div></li>').hide().appendTo( ul ).fadeIn();
                     });
                 }
             }
