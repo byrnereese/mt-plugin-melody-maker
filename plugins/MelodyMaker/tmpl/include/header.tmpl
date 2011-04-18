@@ -37,7 +37,7 @@
 		
 		<div id="admin-masthead" class="container"> 
 
-			<div id="logo"><a href="<$mt:var name="mt_url"$>"><$mt:var name="mt_product_name"$></a></div> 
+			<div id="logo"><a href="<$mt:var name="mt_url"$><mt:if name="blog_id">?blog_id=<mt:var name="blog_id"></mt:if>"<mt:if name="blog_logo_url"> style="background-image: url(<mt:var name="blog_logo_url">);"</mt:if>><$mt:var name="mt_product_name"$></a></div> 
 			
 			<nav id="site-selector"> 
 <mt:if name="blog_id">

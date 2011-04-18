@@ -15,6 +15,13 @@ sub header_param {
         $id =~ s/-menu//;
         $menus->{$id}->{collapsed} = 1;
     }
+    if ($app->blog && $app->blog->meta('logo_asset_id')) {
+        my $aid = $app->blog->meta('logo_asset_id');
+        my $asset = MT->model('asset')->load( $aid );
+        my ( $url, $w, $h ) = $asset->thumbnail_url( Width => 56, Square => 1 );
+        $param->{'blog_logo_url'} = $url;
+    }
+    return 1;
 } ## end header_param 
 
 sub blog_settings_param {
@@ -28,24 +35,24 @@ sub blog_settings_param {
     }
 
     my $setting = $tmpl->createElement('app:setting');
-    $setting->setAttribute('label','Site Logo');
+    $setting->setAttribute('label','Site Icon');
     $setting->setAttribute('id','site-logo');
-    $setting->setAttribute('hint','Upload an image to be associated with this site.');
-    $setting->innerHTML( _get_html($app, 'cfg_blog_logo.tmpl') );
+    $setting->setAttribute('show_hint',1);
+    $setting->setAttribute('hint','Upload a square image to be associated with this site.');
+    $setting->innerHTML( _get_html($app, 'cfg_blog_logo.tmpl', $tmpl->param) );
     $tmpl->$where($setting, $marker);
 } ## end blog_settings_param
 
 sub _get_html {
-    my ($app, $tmpl_name, $tmpl_param) = @_;
+    my ($app, $tmpl_name, $param) = @_;
 
     my $plugin = MT->component("MelodyMaker");
     my $snip_tmpl = $plugin->load_tmpl($tmpl_name) or die $plugin->errstr;
     return q() unless $snip_tmpl;
 
-    require MT::Template;
     my $tmpl;
     if ( ref $snip_tmpl ne 'MT::Template' ) {
-        $tmpl = MT::Template->new(
+        $tmpl = MT->model('template')->new(
             type   => 'scalarref',
             source => ref $snip_tmpl ? $snip_tmpl : \$snip_tmpl
             );
@@ -54,18 +61,16 @@ sub _get_html {
         $tmpl = $snip_tmpl;
     }
 
-#    if ( my $p = $type_obj->{field_html_params} ) {
-#        $p = MT->handler_to_coderef($p) unless ref $p;
-#        $p->(@_);
-#    }
-
-    $tmpl->param($tmpl_param);
     my $ctx = $tmpl->context;
-    $ctx->stash('blog', $app->blog);
-    $ctx->var('magic_token',  MT->app->current_magic);
-    $ctx->var('mt_url',  $app->base . $app->mt_uri);
- 
-    my $html = $tmpl->output()
+    my $blog = $app->blog;
+    $param->{blog_id} = $blog->id;
+    if (my $asset_id = $blog->meta('logo_asset_id')) {
+        $param->{blog_logo_asset_id} = $blog->meta('logo_asset_id');
+        $param->{blog_logo} = $blog->meta('logo_asset_id');
+        my $asset = MT->model('asset')->load( $asset_id );
+        $ctx->stash('asset',$asset);
+    }
+    my $html = $tmpl->output( $param )
         or die $tmpl->errstr;
     $html =~ s/<\/?form[^>]*?>//gis;  # strip any enclosure form blocks
     $html = $plugin->translate_templatized($html);

@@ -19,7 +19,7 @@
 									</form> 
 	<mt:setvartemplate name="blog_list_item">
 										<li id="blog-<$mt:var name="top_blog_id"$>" class="site result"> 
-											<a href="<$mt:var name="mt_url"$>?blog_id=<$mt:var name="top_blog_id"$>&amp;<$mt:var name="return_args" escape="html"$>"><img src="<$mt:PluginStaticWebPath component="MelodyMaker"$>images/site_search/ico_default_logo.png"></a> 
+											<a href="<$mt:var name="mt_url"$>?blog_id=<$mt:var name="top_blog_id"$>&amp;<$mt:var name="return_args" escape="html"$>"><img src="<mt:if name="top_blog_logo" ne=""><$mt:var name="top_blog_logo"$><mt:else><$mt:PluginStaticWebPath component="MelodyMaker"$>images/site_search/ico_default_logo.png</mt:if>" width="38" height="38" alt="Logo for <mt:var name="top_blog_name" escape_html="1">" /></a> 
 											<div class="result_data"> 
 												<a class="pin<mt:if name="top_blog_pinned"> pinned</mt:if>" href="#">Pin This Site</a> 
 												<h4 class="site_title"><a href="<$mt:var name="mt_url"$>?blog_id=<$mt:var name="top_blog_id"$>&amp;<$mt:var name="return_args" escape="html"$>"><$mt:var name="top_blog_name" escape="html"$></a></h4> 

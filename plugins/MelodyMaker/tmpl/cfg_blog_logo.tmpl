@@ -1,7 +1,20 @@
-<div id="current-blog-logo">
-</div>
-<a href="javascript:void(0);" class="open-dialog">Change</a>
+        <span id="blog_logo-preview"<mt:unless name="blog_logo"> class="hidden"</mt:unless>>
+            <span id="blog_logo-preview-userpic">
+                <img src="<mt:AssetThumbnailURL square="1" width="100">" />
+            </span>
+            <br />
+        </span>
+        <a href="javascript:void(0)" onclick="return openDialog(false, 'list_assets', '_type=asset&amp;edit_field=blog_logo_asset_id&amp;blog_id=<mt:var name="blog_id">&amp;dialog_view=1&amp;filter=blog_logo&amp;filter_val=<mt:var name="id" escape="url">&amp;next_mode=asset_blog_logo&amp;upload_mode=upload_blog_logo')"><mt:if name="blog_logo"><__trans phrase="Change Icon"><mt:else><__trans phrase="Select Icon"></mt:if></a>
+        <input name="blog_logo_asset_id" id="blog_logo_asset_id" type="hidden" value="<mt:var name="blog_logo_asset_id" default="0" escape="html">" />
+        <span id="remove-blog_logo"<mt:unless name="blog_logo"> class="hidden"</mt:unless>>
+            <br />
+            <a href="javascript:void(0)"><__trans phrase="Remove Icon"></a>
+            <span id="ajax-message"></span>
+        </span>
 
+
+<mt:ignore>
+<!-- stashing this away because this multi file upload thing actually works! -->
 <div id="select-asset-dialog" title="Upload File">
   <div id="intro-pane" class="pane">
     <ul class="asset-types">
@@ -27,4 +40,4 @@
 <script type="text/javascript" src="<$mt:PluginStaticWebPath component="MelodyMaker"$>jquery-file-upload/jquery.fileupload.js"></script>
 <script type="text/javascript" src="<$mt:PluginStaticWebPath component="MelodyMaker"$>jquery-file-upload/jquery.fileupload-ui.js"></script>
 <script type="text/javascript" src="<$mt:PluginStaticWebPath component="MelodyMaker"$>js/melody.asset.dialog.js"></script>
-
+</mt:ignore>

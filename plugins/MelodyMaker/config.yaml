@@ -43,8 +43,8 @@ status_widgets:
        sub { return MT->instance->blog; }
   console:
     template: console.tmpl
-#    condition: >>
-#       sub { return MT->config->DebugMode > 0; }
+    condition: >>
+       sub { return MT->config->DebugMode > 0; }
 
 tags:
   block:
@@ -53,8 +53,10 @@ tags:
 applications:
   cms:
     methods:
-      save_ui_prefs: $MelodyMaker::MelodyMaker::CMS::save_ui_prefs
+      save_ui_prefs:    $MelodyMaker::MelodyMaker::CMS::save_ui_prefs
       ajax_file_upload: $MelodyMaker::MelodyMaker::CMS::ajax_upload
+      asset_blog_logo:  $MelodyMaker::MelodyMaker::CMS::asset_blog_logo
+      upload_blog_logo: $MelodyMaker::MelodyMaker::CMS::upload_blog_logo
 
 init_app: $MelodyMaker::MelodyMaker::Plugin::init_app
 
@@ -66,3 +68,6 @@ callbacks:
 object_types:
   permission:
     ui_prefs: text
+  blog:
+    logo_asset_id: integer meta
+    logo_url: string meta

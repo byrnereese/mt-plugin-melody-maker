@@ -16,10 +16,15 @@ sub _build_blog_loop {
 #                        { author_id => $auth->id, blog_id => \@fav_blogs, } );
 #        my %perms = map { $_->blog_id => $_ } @perms;
         for my $blog (@$blogs) {
+            next unless $blog;
 #            my $perm = $perms{ $blog->id };
 #            next unless $auth->is_superuser || ( $perm && !$perm->is_empty );
+            my $logo = $blog->meta('logo_url');
             push @data,
-              { top_blog_id => $blog->id, top_blog_name => $blog->name, top_blog_url => $blog->site_url };
+              { top_blog_id => $blog->id, 
+                top_blog_name => $blog->name, 
+                top_blog_url => $blog->site_url, 
+                top_blog_logo => $logo };
         }
     }
     return \@data;
@@ -55,6 +60,7 @@ sub build_blog_selector {
             my %blogs = map { $_->id => $_ } @blogs;
             @blogs = ();
             for (@faves) {
+                print STDERR "Pushing $_\n";
                 push @blogs, $blogs{ $_ };
             }
             $fave_data = _build_blog_loop($app,\@blogs);
@@ -173,6 +179,74 @@ sub build_blog_selector {
     my $tmpl = $plugin->load_tmpl( 'include/blog_selector.tmpl' );
     $tmpl->param($param);
     return $tmpl->output( );
+}
+
+sub upload_blog_logo {
+    my $app = shift;
+
+    require MT::CMS::Asset;
+    my ( $asset, $bytes )
+      = MT::CMS::Asset::_upload_file( $app, @_, require_type => 'image', );
+    return if !defined $asset;
+    return $asset if !defined $bytes;    # whatever it is
+
+    ## TODO: should this be layered into _upload_file somehow, so we don't
+    ## save the asset twice?
+    my $user_id = $app->user->id;
+
+    $asset->tags('@bloglogo');
+    $asset->created_by($user_id);
+    $asset->save;
+
+    $app->forward( 'asset_blog_logo',
+                   { asset => $asset } );
+} ## end sub upload_blog_logo
+
+sub _blog_logo_html {
+    my ($app, $asset) = @_;
+    return '';
+}
+
+sub asset_blog_logo {
+    my $app = shift;
+    my ($param) = @_;
+    my $blog = $app->blog;
+
+    my ($id, $asset);
+    if ($asset = $param->{asset}) {
+        $id = $asset->id;
+    }
+    else {
+        $id = $param->{asset_id} || scalar $app->query->param('id');
+        $asset = $app->model('asset')->lookup($id);
+    }
+
+    my $thumb_html = _blog_logo_html( $app, $asset );
+
+    # Delete the blog's logo thumb (if any); it'll be regenerated.
+    if ($blog->meta('logo_asset_id') != $asset->id) {
+        my $old_asset = MT->model('asset')->load( $blog->meta('logo_asset_id') );
+        if ($old_asset) {
+            my $old_file = $old_asset->file_path();
+            my $fmgr = MT::FileMgr->new('Local');
+            if ($fmgr->exists($old_file)) {
+                $fmgr->delete($old_file);
+            }
+        }
+        $blog->meta('logo_asset_id',$asset->id);
+        my ( $url, $w, $h ) = $asset->thumbnail_url( Width => 38, Square => 1 );
+        $blog->meta('logo_url',$url);
+        $blog->save;
+    }
+
+    $app->load_tmpl(
+        'dialog/asset_blog_logo.tmpl',
+        {
+            asset_id    => $id,
+            edit_field  => $app->query->param('edit_field') || '',
+            blog_logo   => $thumb_html,
+        },
+    );
 }
 
 sub ajax_upload {
