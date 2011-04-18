@@ -1,6 +1,6 @@
         <span id="blog_logo-preview"<mt:unless name="blog_logo"> class="hidden"</mt:unless>>
             <span id="blog_logo-preview-userpic">
-                <img src="<mt:AssetThumbnailURL square="1" width="100">" />
+<mt:if name="blog_logo">                <img src="<mt:AssetThumbnailURL square="1" width="100">" /></mt:if>
             </span>
             <br />
         </span>

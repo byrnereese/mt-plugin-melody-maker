@@ -18,6 +18,7 @@ sub header_param {
     if ($app->blog && $app->blog->meta('logo_asset_id')) {
         my $aid = $app->blog->meta('logo_asset_id');
         my $asset = MT->model('asset')->load( $aid );
+        next unless $asset;
         my ( $url, $w, $h ) = $asset->thumbnail_url( Width => 56, Square => 1 );
         $param->{'blog_logo_url'} = $url;
     }
