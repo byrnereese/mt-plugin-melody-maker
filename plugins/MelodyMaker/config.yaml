@@ -13,7 +13,7 @@ options:
     label: 'Background Color'
     type: select
     default: black
-    scope: system
+    scope: blog
     fieldset: customization
     tag: MelodyMakerBackgroundColor
     values: blue,orange,green,turquoise,purple,red,yellow,black
