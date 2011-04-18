@@ -52,10 +52,9 @@ sub build_blog_selector {
             # Sort blogs. Since it is a small list, let's just do a brute force sort
             my %blogs = map { $_->id => $_ } @blogs;
             @blogs = ();
-            for (@faves) {
-                push @blogs, $blogs{ $_ };
-            }
+            for (@faves) { push @blogs, $blogs{ $_ }; }
             $fave_data = _build_blog_loop($app,\@blogs);
+            $param->{fave_blog_count} = $#faves + 1;
         }
     }
 
@@ -74,7 +73,7 @@ sub build_blog_selector {
                                }
       );
     $args{limit} = $app->blog ? 6 : 5;    # don't load more than 6
-    my @blogs = $blog_class->load( { id => { not => \@faves } }, \%args );
+    my @blogs = $blog_class->load( { (@faves ? (id => { not => \@faves }) : () }, \%args );
 
     # This grouping of fav_blogs is carried over from Movable Type
     # The list is maintained based upon the most recently viewed list
@@ -249,7 +248,11 @@ sub _ui_prefs_from_params {
         $prefs{'collapsed'} = $exp;
     }
     if (my $fav  = $q->param('favorites')) {
-        $prefs{'favorites'} = $fav;
+        if ($fav eq 'none') {
+            $prefs{'favorites'} = '';
+        } else {
+            $prefs{'favorites'} = $fav;
+        }
     }
     \%prefs;
 } ## end sub _ui_prefs_from_params

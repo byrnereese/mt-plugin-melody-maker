@@ -54,9 +54,13 @@
 									<h3>Favorites</h3> 
 	 
 									<ul id="pinned_sites_list" class="blog-selector-connected"> 
+<mt:if name="fave_blog_count">
 									<mt:loop name="fave_blog_loop">
 									  <mt:var name="blog_list_item">
 									</mt:loop> 
+<mt:else>
+                                    <li id="drop-indicator" class="site result">Add a favorite by dropping a site here.</li>
+</mt:if>
 									</ul> 
 	 
 								</div> 

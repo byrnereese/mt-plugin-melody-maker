@@ -161,6 +161,7 @@
                     ui.item.fadeOut('fast',function() { 
                         $(this).remove(); 
                         var favorites = $('#pinned_sites_list').sortable('toArray').toString().replace(/blog-/g,'');
+                        if ( favorites == '' ) favorites = 'none';
 		                $.post( ScriptURI, {
                             '__mode'      : 'save_ui_prefs',
                             'magic_token' : MagicToken,
