@@ -10,15 +10,8 @@ sub _build_blog_loop {
     my $auth = $app->user or return;
     my @data;
     if ($blogs) {
-#        my @perms
-#          = grep { !$_->is_empty }
-#          MT->model('permission')->load(
-#                        { author_id => $auth->id, blog_id => \@fav_blogs, } );
-#        my %perms = map { $_->blog_id => $_ } @perms;
         for my $blog (@$blogs) {
             next unless $blog;
-#            my $perm = $perms{ $blog->id };
-#            next unless $auth->is_superuser || ( $perm && !$perm->is_empty );
             my $logo = $blog->meta('logo_url');
             push @data,
               { top_blog_id => $blog->id, 
@@ -60,7 +53,6 @@ sub build_blog_selector {
             my %blogs = map { $_->id => $_ } @blogs;
             @blogs = ();
             for (@faves) {
-                print STDERR "Pushing $_\n";
                 push @blogs, $blogs{ $_ };
             }
             $fave_data = _build_blog_loop($app,\@blogs);
