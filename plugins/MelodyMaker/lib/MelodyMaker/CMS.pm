@@ -8,16 +8,16 @@ use MT::Util qw( encode_url );
 sub _build_blog_loop {
     my ($app,$blogs) = @_;
     my $auth = $app->user or return;
-    my @data;
+    my @data = ();
     if ($blogs) {
         for my $blog (@$blogs) {
             next unless $blog;
             my $logo = $blog->meta('logo_url');
             push @data,
-              { top_blog_id => $blog->id, 
+              { top_blog_id   => $blog->id, 
                 top_blog_name => $blog->name, 
-                top_blog_url => $blog->site_url, 
-                top_blog_logo => $logo };
+                top_blog_url  => $blog->site_url, 
+                ( $logo ? (top_blog_logo => $logo) : () ) };
         }
     }
     return \@data;
@@ -31,7 +31,7 @@ sub build_blog_selector {
     my $param = {};
 
     my $blog = $app->blog;
-    my $blog_id = $blog->id if $blog;
+    my $blog_id = $blog ? $blog->id : 0;
 
     $param->{dynamic_all} = $blog->custom_dynamic_templates eq 'all' if $blog;
 
@@ -73,7 +73,7 @@ sub build_blog_selector {
                                }
       );
     $args{limit} = $app->blog ? 6 : 5;    # don't load more than 6
-    my @blogs = $blog_class->load( { (@faves ? (id => { not => \@faves }) : () }, \%args );
+    my @blogs = $blog_class->load( { (@faves ? (id => { not => \@faves }) : ()) }, \%args );
 
     # This grouping of fav_blogs is carried over from Movable Type
     # The list is maintained based upon the most recently viewed list
@@ -146,10 +146,11 @@ sub build_blog_selector {
     #   * Load all of those blogs so we can display them
     #   * Exclude the current blog from the favorite list so it isn't
     #     shown twice.
-    @blogs = $blog_class->load( { id => \@accessed_blogs, id => { not => \@faves } } ) if @accessed_blogs;
+    @blogs = $blog_class->load( { id => \@accessed_blogs, ( @faves ? (id => { not => \@faves }) : () ) } ) if @accessed_blogs;
     my %blogs = map { $_->id => $_ } @blogs;
     @blogs = ();
     foreach my $id (@accessed_blogs) {
+        use Data::Dumper;
         push @blogs, $blogs{$id} if $blogs{$id};
     }
 
