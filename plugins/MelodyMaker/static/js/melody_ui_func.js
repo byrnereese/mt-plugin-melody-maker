@@ -161,7 +161,10 @@
                     ui.item.fadeOut('fast',function() { 
                         $(this).remove(); 
                         var favorites = $('#pinned_sites_list').sortable('toArray').toString().replace(/blog-/g,'');
-                        if ( favorites == '' ) favorites = 'none';
+                        if ( favorites == '' ) {
+                            favorites = 'none';
+                            $('#pinned_sites_list').append('<li id="drop-indicator" class="site result">Add a favorite by dropping a site here.</li>');
+                        }
 		                $.post( ScriptURI, {
                             '__mode'      : 'save_ui_prefs',
                             'magic_token' : MagicToken,
