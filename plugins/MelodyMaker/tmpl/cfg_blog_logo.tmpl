@@ -11,33 +11,3 @@
             <a href="javascript:void(0)"><__trans phrase="Remove Icon"></a>
             <span id="ajax-message"></span>
         </span>
-
-
-<mt:ignore>
-<!-- stashing this away because this multi file upload thing actually works! -->
-<div id="select-asset-dialog" title="Upload File">
-  <div id="intro-pane" class="pane">
-    <ul class="asset-types">
-      <li><a href="javascript:void(0)" class="select">Select existing asset</a></li>
-      <li><a href="javascript:void(0)" class="upload">Upload new file(s)</a></li>
-      <li><a href="javascript:void(0)" class="image">Image</a></li>
-      <li><a href="javascript:void(0)" class="video">Video</a></li>
-      <li><a href="javascript:void(0)" class="audio">Audio</a></li>
-      <li><a href="javascript:void(0)" class="file">File</a></li>
-    </ul>
-  </div>
-  <div id="upload-pane" class="pane hidden">
-    <div id="file_upload">
-      <input type="file" name="file" multiple>
-      <button>Upload</button>
-      <div>Upload files</div>
-    </div>
-    <table id="uploaded-files"></table>
-  </div>
-</div>
-
-<!-- For MultiFile Uploads -->
-<script type="text/javascript" src="<$mt:PluginStaticWebPath component="MelodyMaker"$>jquery-file-upload/jquery.fileupload.js"></script>
-<script type="text/javascript" src="<$mt:PluginStaticWebPath component="MelodyMaker"$>jquery-file-upload/jquery.fileupload-ui.js"></script>
-<script type="text/javascript" src="<$mt:PluginStaticWebPath component="MelodyMaker"$>js/melody.asset.dialog.js"></script>
-</mt:ignore>
