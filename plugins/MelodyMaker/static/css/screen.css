@@ -1,3 +1,5 @@
+/* @override http://themediscovery.com/cgi-bin/melody/mt-static/support/plugins/melodymaker/css/screen.css?v=1.0.0 */
+
 /* @group Body Styles */
 
 body{
@@ -97,91 +99,40 @@ div.filter{
 	top: -38px;
 }
 
+.help-link{
+	position: relative;
+	text-decoration: none;
+	background: #f2f2f2;
+	color: #aaa;
+	padding: 0 5px;
+	border-radius: 20px;
+
+}
+
+.help-link:hover{
+	background: #fff;
+	text-decoration: none;
+}
+
+.help-link:active{
+	margin-top: 1px;
+}
+
 /* @end */
 
 /* @group Global Button Styles */
 
-a.button,
+/* @group Basic Button Skin */
+
+.button,
 input[type="submit"],
-button,
-.view-all a,
-.buttons a,
-.listing .actions-bar-inner .button-actions a{
-	display: inline-block;
-	font-family: "lucida grande", sans-serif;
-	font-size: 11px;
-	font-weight: bold;
-	color: #fff;
-	background: #3b88d8;
-	background: -moz-linear-gradient(0% 100% 90deg, #377ad0, #52a8e8);
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#52a8e8), to(#377ad0));
-	border-top: 1px solid #4081af;
-	border-right: 1px solid #2e69a3;
-	border-bottom: 1px solid #20559a;
-	border-left: 1px solid #2e69a3;
-	-moz-border-radius: 16px;
-	-webkit-border-radius: 16px;
-	border-radius: 16px;
-	box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.2), 0 1px 2px 0 #b3b3b3;
-	-moz-box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.2), 0 1px 2px 0 #b3b3b3;
-	-webkit-box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.2), 0 1px 2px 0 #b3b3b3;
-	line-height: 1;
-	text-align: center;
-	text-shadow: 0 -1px 1px #3275bc;
-	padding-top: 4px;
-	padding-right: 15px;
-	padding-bottom: 6px;
-	padding-left: 15px;
-	text-decoration: none;
-}
-
-a.button:hover,
-input[type="submit"]:hover,
-button:hover,
-.view-all a:hover,
-.buttons a:hover,
-.listing .actions-bar-inner .button-actions a:hover{
-	background: #2a81d7;
-	background: -moz-linear-gradient(0% 100% 90deg, #206bcb, #3e9ee5);
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, 
-	from(#3e9ee5), to(#206bcb));
-	border-top: 1px solid #2a73a6;
-	border-right: 1px solid #165899;
-	border-bottom: 1px solid #07428f;
-	border-left: 1px solid #165899;
-	box-shadow: 0 1px 2px 0 #b3b3b3;
-	-moz-box-shadow: 0 1px 2px 0 #b3b3b3;
-	-webkit-box-shadow: 0 1px 2px 0 #b3b3b3;
-	cursor: pointer;
-	text-shadow: 0 -1px 1px #1d62ab;
-}
-
-a.button:active,
-input[type="submit"]:active,
-button:active,
-.view-all a:active,
-.buttons a:active,
-.listing .actions-bar-inner .button-actions a:active{
-	background: #206bcb;
-	box-shadow: none;
-	-moz-box-shadow: none;
-	-webkit-box-shadow: none;
-	cursor: pointer;
-	text-shadow: 0 -1px 1px #1d62ab;
-}
-
-a.secondary,
-button[name="preview_entry"],
-.buttons a:last-child,
-.action-link-list .icon-left,
-#admin-content-primary p > .icon-left,
-#list-member ul li .icon-left{
+button{
 	font-family: "lucida grande", sans-serif;
 	font-size: 11px;
 	font-weight: bold;
 	color: #222;
 	background: #eee;
-	background: -moz-linear-gradient(0% 100% 90deg, #f2f2f2, #ccc);
+	background: -moz-linear-gradient(0% 100% 90deg, #ccc, #f2f2f2);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f2f2f2), to(#ccc));
 	border-top: 1px solid #888;
 	border-right: 1px solid #777;
@@ -203,15 +154,12 @@ button[name="preview_entry"],
 	text-decoration: none;
 }
 
-a.secondary:hover,
-button[name="preview_entry"]:hover,
-.buttons a:last-child:hover,
-.action-link-list .icon-left:hover,
-#admin-content-primary p > .icon-left:hover,
-#list-member ul li .icon-left:hover{
+.button:hover,
+input[type="submit"]:hover,
+button:hover{
 	color: #222;
 	background: #2a81d7;
-	background: -moz-linear-gradient(0% 100% 90deg, #f9f9f9, #c9c9c9);
+	background: -moz-linear-gradient(0% 100% 90deg, #c9c9c9, #f9f9f9);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, 
 	from(#f9f9f9), to(#c9c9c9));
 	border-top: 1px solid #909090;
@@ -226,13 +174,11 @@ button[name="preview_entry"]:hover,
 	text-decoration: none;
 }
 
-a.secondary:active,
-button[name="preview_entry"]:active,
-.buttons a:last-child:active,
-.action-link-list .icon-left:active,
-#admin-content-primary p > .icon-left:active,
-#list-member ul li .icon-left:active{
+.button:active,
+input[type="submit"]:active,
+button:active{
 	color: #222;
+	color: rgba(0,0,0,0.6);
 	background: -moz-linear-gradient(0% 100% 90deg, #aaa, #ccc);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, 
 	from(#aaa), to(#ccc));
@@ -244,24 +190,54 @@ button[name="preview_entry"]:active,
 	text-decoration: none;
 }
 
-.help-link{
-	position: relative;
-	text-decoration: none;
-	background: #f2f2f2;
-	color: #aaa;
-	padding: 0 5px;
-	border-radius: 20px;
+/* @end */
 
+/* @group Primary Button Skin */
+
+.primary{
+	color: #fff;
+	background: #3b88d8;
+	background: -moz-linear-gradient(0% 100% 90deg, #377ad0, #52a8e8);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#52a8e8), to(#377ad0));
+	border-top-color: #4081af;
+	border-right-color: #2e69a3;
+	border-bottom-color: #20559a;
+	border-left-color: #2e69a3;
+	box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.2), 0 1px 2px 0 #b3b3b3;
+	-moz-box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.2), 0 1px 2px 0 #b3b3b3;
+	-webkit-box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.2), 0 1px 2px 0 #b3b3b3;
+	text-shadow: 0 -1px 1px #3275bc;
 }
 
-.help-link:hover{
-	background: #fff;
-	text-decoration: none;
+.primary:hover{
+	color: #fff;
+	background: #2a81d7;
+	background: -moz-linear-gradient(0% 100% 90deg, #206bcb, #3e9ee5);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, 
+	from(#3e9ee5), to(#206bcb));
+	border-top: 1px solid #2a73a6;
+	border-right: 1px solid #165899;
+	border-bottom: 1px solid #07428f;
+	border-left: 1px solid #165899;
+	box-shadow: 0 1px 2px 0 #b3b3b3;
+	-moz-box-shadow: 0 1px 2px 0 #b3b3b3;
+	-webkit-box-shadow: 0 1px 2px 0 #b3b3b3;
+	cursor: pointer;
+	text-shadow: 0 -1px 1px #1d62ab;
 }
 
-.help-link:active{
-	margin-top: 1px;
+.primary:active{
+	color: #fff;
+	color: rgba(255,255,255,0.6);
+	background: #206bcb;
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	cursor: pointer;
+	text-shadow: 0 -1px 1px #1d62ab;
 }
+
+/* @end */
 
 /* @end */
 
@@ -1028,10 +1004,12 @@ html.cssgradients #create_site:hover{
 #customize-tab-content,
 #theme-chooser,
 #edit-blog .settings-actions-bar,
+#edit-blog.create-new #admin-content form > fieldset,
 #template-listing-form,
 .fieldset-options,
 form#manager,
 .welcome-widget,
+.plugin_form,
 #search-replace .search-bar,
 #backup-panel,
 #export_blog_id_field-field,
@@ -1055,7 +1033,8 @@ form#manager,
 #edit-blog #admin-content-primary fieldset .actions-bar,
 #list-plugins .fieldset-options,
 form#manager fieldset,
-#template-listing-form{
+#template-listing-form,
+.plugin-form form > fieldset{
 	background: transparent;
 	position: relative;
 	padding: 0;
