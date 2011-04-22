@@ -730,7 +730,7 @@ button[name="preview_entry"]:active,
 .full #drop-indicator { position: absolute; top: 0; left: 0; opacity: .8; width: 343px; height: 303px; text-align: center; font-size: 2em; font-weight: bold; padding: 145px 0 0 0; }
 #pinned_sites_list { position: relative; }
 .site a.site_preview { overflow: hidden; text-overflow: ellipsis; width: 251px; display: block; }
-.plugin_form, .sys-preference, .blog-preferences { display: none; }
+.plugin_form, .sys-preferences, .blog-preferences { display: none; }
 /* @end */
 
 /* @group Blog Menu */
@@ -2462,4 +2462,8 @@ ul.object-nav li#next-link a:active{
 center; font-size: 2em; font-weight: bold; padding: 145px 0 0 0; }
 #pinned_sites_list { position: relative; }
 .site a.site_preview { overflow: hidden; text-overflow: ellipsis; width: 251px; display: block; }	
+.create-row { display: none; }
+.field-inline { float: left; }
+.field-inline .field-header { display: none; }
+.field-inline .field-content { margin-top: 20px; }
 /* @end */
