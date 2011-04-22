@@ -2,7 +2,7 @@ id: MelodyMaker
 name: Melody Maker
 description: This plugin provides a new customizable look and feel for the Melody publishing platform. 
 static_version: 1
-schema_version: 1
+schema_version: 2
 version: 0.2
 
 options:

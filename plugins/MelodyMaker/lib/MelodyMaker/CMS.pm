@@ -45,7 +45,7 @@ sub build_blog_selector {
     if ($perms) {
         require JSON;
         my $prefs     = JSON::from_json($perms->ui_prefs);
-        my $favorites = $prefs->{favorites};
+        my $favorites = $prefs->{favorites} || '';
         @faves        = split(',',$favorites);
         if (@faves) {
             my @blogs     = $blog_class->load( { id => \@faves } );

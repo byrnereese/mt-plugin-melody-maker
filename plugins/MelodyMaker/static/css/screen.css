@@ -194,7 +194,9 @@ button:active{
 
 /* @group Primary Button Skin */
 
-.primary{
+.primary,
+input[type="submit"].primary,
+button.primary{
 	color: #fff;
 	background: #3b88d8;
 	background: -moz-linear-gradient(0% 100% 90deg, #377ad0, #52a8e8);
@@ -209,7 +211,9 @@ button:active{
 	text-shadow: 0 -1px 1px #3275bc;
 }
 
-.primary:hover{
+.primary:hover,
+input[type="submit"].primary:hover,
+button.primary:hover{
 	color: #fff;
 	background: #2a81d7;
 	background: -moz-linear-gradient(0% 100% 90deg, #206bcb, #3e9ee5);
@@ -226,7 +230,9 @@ button:active{
 	text-shadow: 0 -1px 1px #1d62ab;
 }
 
-.primary:active{
+.primary:active,
+input[type="submit"].primary:active,
+button.primary:active{
 	color: #fff;
 	color: rgba(255,255,255,0.6);
 	background: #206bcb;
@@ -2634,16 +2640,4 @@ ul.object-nav li#next-link a:active{
 	margin-right: 15px;
 }
 
-/* @end */
-
-/* Added by Byrne */
-.blog-highlight { height: 0px; background-color: #444; }
-.full #drop-indicator { position: absolute; top: 0; left: 0; opacity: .8; width: 343px; height: 303px; text-align: 
-center; font-size: 2em; font-weight: bold; padding: 145px 0 0 0; }
-#pinned_sites_list { position: relative; }
-.site a.site_preview { overflow: hidden; text-overflow: ellipsis; width: 251px; display: block; }	
-.create-row { display: none; }
-.field-inline { float: left; }
-.field-inline .field-header { display: none; }
-.field-inline .field-content { margin-top: 20px; }
 /* @end */
