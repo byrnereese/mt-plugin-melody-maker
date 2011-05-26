@@ -5,8 +5,10 @@ use strict;
 sub init_app {
     my $cb     = shift;
     my ($app)  = @_;
+    return unless $app->isa('MT::App::CMS');
     require MelodyMaker::CMS;
     my $r = $app->registry;
+
 #    return if $app->query->param('noui');
     my $selector = $r->{'blog_selector'};
     $selector->{code} = sub { &MelodyMaker::CMS::build_blog_selector; };

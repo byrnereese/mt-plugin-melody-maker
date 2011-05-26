@@ -117,15 +117,18 @@
 				</mt:if>
 								
 				<mt:if name="object_nav"><$mt:var name="object_nav"$></mt:if>
-				
+
 				<h1 class="page-title">
 				
 					<$mt:var name="page_title"$><mt:if name="loaded_revision">: <em><__trans phrase="from Revision History"></em></mt:if>
 
-					<mt:if name="show_display_options_link">
-					    <a href="javascript:void(0)" class="button secondary display-options-link" mt:command="open-flyout" mt:flyout="display-options-widget"><__trans phrase="Display Options"></a>
-					</mt:if>
-
+                    <mt:if name="show_display_options_link">
+                    <div id="display-options" class="display-options">
+					    <a href="javascript:void(0)" class="button secondary toggle-link detail-link display-options-link"><__trans phrase="Display Options"></a>
+                        <mt:var name="display_options">
+                    </div>
+                    </mt:if>
+				
 				</h1>
 
 				<div id="admin-content-inner">

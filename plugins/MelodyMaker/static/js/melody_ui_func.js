@@ -79,9 +79,9 @@
 		$('#edit-entry #admin-content-inner').append($('#edit-entry #related-content'));*/
 
         /* Entry/Page Screen */
-        $('.entry-date').datepicker({
-            'dateFormat' : 'yy-mm-dd' 
-        });
+        //$('.entry-date').datepicker({
+        //    'dateFormat' : 'yy-mm-dd' 
+        //});
 
         /* Blog Selector */
         $('#search-sites').ajaxForm({

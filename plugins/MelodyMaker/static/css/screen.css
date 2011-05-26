@@ -2251,7 +2251,8 @@ input#search,
 
 /* @group Display Options Dialog */
 
-#display-options-widget{
+#display-options-detail{
+    display: none;
 	position: absolute;
 	margin-top: 29px;
 	margin-left: 30px;
@@ -2271,18 +2272,22 @@ input#search,
 	overflow: visible;
 }
 
-#display-options-widget .field-inner{
+#display-options-detail.active{
+    display: block;
+}
+
+#display-options-detail .field-inner{
 	border-bottom: none;
 	padding-bottom: 0;
 }
 
-#display-options-widget #reset_display_options-field a{
+#display-options-detail #reset_display_options-field a{
 	min-width: 60px;
 	display: block;
 	text-align: center;
 }
 
-#display-options-widget h3{
+#display-options-detail h3{
 	font-size: 14px;
 	padding: 10px;
 	position: relative;
@@ -2293,11 +2298,11 @@ input#search,
 	margin-bottom: 0;
 }
 
-#display-options-widget ul li label{
+#display-options-detail ul li label{
 	font-weight: normal;
 }
 
-#display-options-widget h3 span:before{
+#display-options-detail h3 span:before{
 	display: block;
 	background: url("../images/icons/ico_dropdown_arrow.png") no-repeat 0 0;
 	height: 10px;
@@ -2310,12 +2315,12 @@ input#search,
 	text-indent: -9000px;
 }
 
-#display-options-widget .actions-bar{
+#display-options-detail .actions-bar{
 	clear: both;
 	padding-top: 10px;
 }
 
-#display-options-widget .actions-bar-inner{
+#display-options-detail .actions-bar-inner{
 	text-align: center;
 	padding: 10px 5px;
 	background-color: #eee;
@@ -2324,12 +2329,12 @@ input#search,
 	-webkit-border-radius: 4px;
 }
 
-#display-options-widget .actions-bar-inner a{
+#display-options-detail .actions-bar-inner a{
 	min-width: 60px;
 	margin: auto 0;
 }
 
-#display-options-widget .field-display-options{
+#display-options-detail .field-display-options{
 	width: 25%;
 	float: left;
 }

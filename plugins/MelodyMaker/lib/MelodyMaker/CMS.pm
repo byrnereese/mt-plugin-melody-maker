@@ -268,6 +268,15 @@ sub _send_json_response {
     return undef;
 } ## end _send_json_response
 
+# This method could be folded into core. Right now it is saving data to a column that 
+# is defined by Melody by default, but by all appearances is not being used. The 
+# assumption is that it is safe for me to use.
+# Originally, Melody Maker extended the MT::Permission table, but at some point the
+# fact that it was extending the table made Upgrades impossible. So I switched from
+# stashing the UI's state in MT::Permission->ui_prefs to the already existing
+# MT::Permission->blog_prefs.
+# The blog_prefs field was once used by MT3 to store a user's preferences with 
+# regards to the now obsolete feature of basic and advanced configuration modes.
 sub save_ui_prefs {
     my $app   = shift;
     my $perms = $app->user->permissions

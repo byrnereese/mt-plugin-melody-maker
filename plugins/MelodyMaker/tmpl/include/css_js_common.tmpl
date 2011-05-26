@@ -42,10 +42,6 @@
       <mt:var name="linked_stylesheet" component="MelodyMaker" relpath="css/print.css" media="print">
       <!--[if lt IE 8]><mt:var name="linked_stylesheet" component="MelodyMaker" relpath="css/ie.css" media="screen, projection"><![endif]--> 
 
-  <mt:unless name="optimize_ui">
-  <mt:else>
-  </mt:unless>
-
     <mt:if name="local_lang_id" ne="en-us">
       <mt:setvarblock name="relpath">styles_<mt:var name="local_lang_id">.css</mt:setvarblock>
       <mt:var name="linked_stylesheet" relpath="$relpath">
@@ -66,6 +62,8 @@
       /* ]]> */
       </script>
       <mt:var name="linked_script" relpath="jquery/jquery.json.js">
+      <mt:var name="linked_script" relpath="jquery/ui/jquery.ui.all.js">
+
       <mt:var name="linked_script" relpath="js/common/Core.js">
       <mt:var name="linked_script" relpath="js/common/Timer.js">
       <mt:var name="linked_script" relpath="js/common/Cookie.js">
@@ -81,18 +79,6 @@
       <mt:var name="linked_script" relpath="js/common/Template.js">
       <mt:var name="linked_script" relpath="js/tc.js">
       <mt:var name="linked_script" relpath="js/tc/tableselect.js">
-      <mt:var name="linked_script" relpath="jquery/ui/jquery.ui.all.js">
-      <mt:var name="linked_script" relpath="js/fancybox/jquery.fancybox-1.3.4.js">
-
-      <!-- Admin JS --> 
-      <mt:var name="linked_script" component="MelodyMaker" relpath="js/modernizr-1.7.min.js">
-      <mt:var name="linked_script" component="MelodyMaker" relpath="js/jquery.ba-resize.min.js">
-      <mt:var name="linked_script" component="MelodyMaker" relpath="js/jquery.infieldlabels.js">
-      <mt:var name="linked_script" component="MelodyMaker" relpath="js/melody_ui_func.js">
-
-      <!-- Blog Selector -->
-      <mt:var name="linked_script" relpath="jquery/jquery.form.js">
-
     <mt:else>
       <mt:if name="jqueryurl" like="/mt-static\/jquery\/jquery.js">
           <mt:var name="jqueryurl" replace="jquery.js","jquery.min.js" setvar="jqueryurl">
@@ -104,12 +90,26 @@
       /* ]]> */
       </script>
       <mt:var name="linked_script" relpath="jquery/jquery.json.js">
-      <mt:var name="linked_script" relpath="js/mt_core_compact.js">
       <mt:var name="linked_script" relpath="jquery/ui/minified/jquery.ui.all.min.js">
+      <mt:var name="linked_script" relpath="js/mt_core_compact.js">
     </mt:unless>
+
+      <!-- Admin JS --> 
+      <mt:var name="linked_script" component="MelodyMaker" relpath="js/modernizr-1.7.min.js">
+      <mt:var name="linked_script" component="MelodyMaker" relpath="js/jquery.ba-resize.min.js">
+      <mt:var name="linked_script" component="MelodyMaker" relpath="js/jquery.infieldlabels.js">
+      <mt:var name="linked_script" component="MelodyMaker" relpath="js/melody_ui_func.js">
+
+      <!-- Blog Selector -->
+      <mt:var name="linked_script" relpath="jquery/jquery.form.js">
+      <mt:var name="linked_script" relpath="js/fancybox/jquery.fancybox-1.3.4.pack.js">
+
 </mt:setvarblock> <mt:ignore> End of mt:setvarblock name="html_head" prepend="1" </mt:ignore>
 
 <mt:setvarblock name="js_include" prepend="1">
+<mt:if name="listing_screen">
+    <mt:var name="linked_script" relpath="js/common/listing.js">
+</mt:if>
     <mt:var name="linked_script" relpath="mt.js">
     <mt:var name="linked_script" relpath="jquery.mt.js">
     <mt:if name="local_lang_id" ne="en-us">
