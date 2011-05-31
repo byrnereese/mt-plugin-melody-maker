@@ -7,7 +7,7 @@ sub header_param {
     my ($cb, $app, $param, $tmpl) = @_;
     my $perms = $app->user->permissions;
     require JSON;
-    my $prefs = JSON::from_json( $perms->ui_prefs );
+    my $prefs = JSON::from_json( $perms->ui_prefs || '{}' );
     my $coll = $prefs->{'collapsed'} || '';
     my @collapsed = split(',',$coll);
     my $menus = $app->registry('menus');
