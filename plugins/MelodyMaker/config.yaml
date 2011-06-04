@@ -3,7 +3,7 @@ name: Melody Maker
 description: This plugin provides a new customizable look and feel for the Melody publishing platform. 
 static_version: 1
 schema_version: 3
-version: 0.3
+version: 0.3.1
 
 options:
   fieldsets:

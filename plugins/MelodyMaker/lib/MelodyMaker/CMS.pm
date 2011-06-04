@@ -44,7 +44,8 @@ sub build_blog_selector {
     my $fave_data;
     if ($perms) {
         require JSON;
-        my $prefs     = JSON::from_json($perms->ui_prefs);
+        my $pref_str = $perms && $perms->ui_prefs ? $perms->ui_prefs : '{}';
+        my $prefs = JSON::from_json( $pref_str );
         my $favorites = $prefs->{favorites} || '';
         @faves        = split(',',$favorites);
         if (@faves) {
